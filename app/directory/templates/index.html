@@ -12,7 +12,8 @@
         <p>{{ form.submit }} </p>
     </form>
 
-    {% if organization %}
+    {% if organizations %}
+        {% for organization in organizations %}
     <div>
     	<h1> Organizations </h1> 
     	<h2> {{ organization.name }} </h2>
@@ -20,6 +21,7 @@
     	<h3> {{ organization.website }} </h3>
     	<h3> {{ organization.phone }} </h3>
     </div>
+        {% endfor %}
     {% endif %}
 
     {% if program %}

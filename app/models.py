@@ -1,6 +1,7 @@
-from . import db
 import enum
 from datetime import date
+from flask_sqlalchemy import SQLAlchemy
+from app.database import db
 
 class Organization(db.Model):
 
@@ -9,7 +10,7 @@ class Organization(db.Model):
   id = db.Column(db.Integer,
                   primary_key=True)
 
-  name = db.Column(db.String(80)
+  name = db.Column(db.String(80),
                     unique=True, 
                     nullable=False)
 
@@ -21,7 +22,7 @@ class Organization(db.Model):
                       unique=False,
                       nullable=True)
 
-  phone = db.Column(db.String(80)
+  phone = db.Column(db.String(80),
                     unique=False,
                     nullable=True)
 
@@ -33,38 +34,9 @@ class Organization(db.Model):
                             nullable=False,
                             default=date.today(),
                             )
+  def __repr__(self):
+    return f"Organization('{self.name}', '{self.description}', '{self.address}', '{self.website}', '{self.phone}', '{self.last_updated}')"
 
-
-class ProgramAge(enum.Enum):
-  prek_0_3 = 1
-  prek_3_5 = 2
-  grades_K_8 = 3
-  grades_9_12 = 4
-  adult = 5
-
-
-class ProgramType(db.Model):
-  __tablename__ = 'program_types'
-
-  id = db.Column(db.Integer,
-                  primary_key=True)
-
-  name = db.Column(db.String(80),
-                    unique=False,
-                    nullable=False)
-
-  ages = db.Column(db.Enum(ProgramAge),
-                    unique=False,
-                    nullable=False)
-
-  open_public_school_enrollement =  db.Column(db.Boolean,
-                                                unique=False,
-                                                nullable=False)
-  
-  last_updated = db.Column(db.DateTime,
-                            nullable=False,
-                            default=date.today(),
-                            )
 
 
 class Program(db.Model):
@@ -74,11 +46,11 @@ class Program(db.Model):
   id = db.Column(db.Integer,
                   primary_key=True)
 
-  name = db.Column(db.String(80)
+  name = db.Column(db.String(80),
                     unique=True, 
                     nullable=False)
 
-  description = db.Column(db.text(120),
+  description = db.Column(db.Text,
                       unique=False,
                       nullable=True)
 
@@ -86,39 +58,30 @@ class Program(db.Model):
                     unique=False,
                     nullable=False)
 
-  website = db.column(db.Text,  
+  open_public_school_enrollement =  db.Column(db.Boolean,
+                                              unique=False,
+                                              nullable=False)
+
+  website = db.Column(db.Text,  
                       unique=False,
                       nullable=True)
 
-  phone = db.Column(db.String(80)
+  phone = db.Column(db.String(80),
                     unique=False,
                     nullable=True)
 
-  type_id = db.Column(db.Integer,
-                    db.ForeignKey('program_type.id'),
-                    unique=True, 
-                    nullable=False)
-
   org_id = db.Column(db.Integer,
-                    db.ForeignKey('organization.id'),
+                    db.ForeignKey('organizations.id'),
                     unique=True, 
                     nullable=False)
 
-  # program join tables
-neighborhood_programs: db.Table('neighborhood_programs',
-                    db.Column('neighborhood_id', db.Integer, db.ForeignKey('neighborhood.id'), primary_key=True),
-                    db.Column('program_id', db.Integer, db.ForeignKey('program.id'), primary_key=True)
-                    )
+  last_updated = db.Column(db.DateTime,
+                            nullable=False,
+                            default=date.today(),
+                            )
 
-zipcode_programs: db.Table('zipcode_programs',
-                    db.Column('zip_id', db.Integer, db.ForeignKey('zip.id'), primary_key=True),
-                    db.Column('program_id', db.Integer, db.ForeignKey('program.id'), primary_key=True)
-                    )
-
-schoool_programs: db.Table('schoool_programs',
-                    db.Column('school_id', db.Integer, db.ForeignKey('school.id'), primary_key=True),
-                    db.Column('program_id', db.Integer, db.ForeignKey('program.id'), primary_key=True)
-                    )
+  def __repr__(self):
+    return f"Program('{self.name}', '{self.description}', '{self.volunteers_needed}', '{self.open_public_school_enrollement}') , '{self.website}', , '{self.phone}', '{self.org_id}', '{self.last_updated}'"
 
 
 # location tables
@@ -134,6 +97,10 @@ class Neighborhoods(db.Model):
                   unique=False,
                   nullable=False)
 
+  def __repr__(self):
+    return f"Neighborhood('{self.name}'"
+
+
   # ???
 
 class ZipCodes(db.Model):
@@ -146,6 +113,9 @@ class ZipCodes(db.Model):
   name = db.Column(db.Integer,
                     unique=True,
                     nullable=False)
+
+  def __repr__(self):
+    return f"ZipCode('{self.name}'"
 
   # ??
 
@@ -160,23 +130,81 @@ class Schools(db.Model):
                     unique=True,
                     nullable=False)
 
+  def __repr__(self):
+    return f"School('{self.name}'"
+
   # ??
+
+    # program join tables
+neighborhood_programs: db.Table('neighborhood_programs',
+                    db.Column('neighborhood_id', db.Integer, db.ForeignKey('neighborhoods.id'), primary_key=True),
+                    db.Column('program_id', db.Integer, db.ForeignKey('programs.id'), primary_key=True)
+                    )
+
+zipcode_programs: db.Table('zipcode_programs',
+                    db.Column('zip_id', db.Integer, db.ForeignKey('zip_codes.id'), primary_key=True),
+                    db.Column('program_id', db.Integer, db.ForeignKey('programs.id'), primary_key=True)
+                    )
+
+schoool_programs: db.Table('schoool_programs',
+                    db.Column('school_id', db.Integer, db.ForeignKey('schools.id'), primary_key=True),
+                    db.Column('program_id', db.Integer, db.ForeignKey('programs.id'), primary_key=True)
+                    )
+
 
 # join tables for locations
 
 neighborhood_zips: db.Table('neighborhood_zips',
-                    db.Column('neighborhood_id', db.Integer, db.ForeignKey('neighborhood.id'), primary_key=True),
-                    db.Column('zip_id', db.Integer, db.ForeignKey('zip.id'), primary_key=True)
+                    db.Column('neighborhood_id', db.Integer, db.ForeignKey('neighborhoods.id'), primary_key=True),
+                    db.Column('zip_id', db.Integer, db.ForeignKey('zip_codes.id'), primary_key=True)
                     )
 
 school_zips: db.Table('school_zips',
-                    db.Column('school_id', db.Integer, db.ForeignKey('school.id'), primary_key=True),
-                    db.Column('zip_id', db.Integer, db.ForeignKey('zip.id'), primary_key=True)
+                    db.Column('school_id', db.Integer, db.ForeignKey('schools.id'), primary_key=True),
+                    db.Column('zip_id', db.Integer, db.ForeignKey('zip_codes.id'), primary_key=True)
                     )
 
 neighborhood_schools: db.Table('neighborhood_schools',
-                    db.Column('neighborhood_id', db.Integer, db.ForeignKey('neighborhood.id'), primary_key=True),
-                    db.Column('school_id', db.Integer, db.ForeignKey('school.id'), primary_key=True)
+                    db.Column('neighborhood_id', db.Integer, db.ForeignKey('neighborhoods.id'), primary_key=True),
+                    db.Column('school_id', db.Integer, db.ForeignKey('schools.id'), primary_key=True)
                     )
 
+# program type and age tables
 
+
+class ProgramType(db.Model):
+  __tablename__ = 'program_type'
+
+  id = db.Column(db.Integer,
+                  primary_key=True)
+
+  name = db.Column(db.String(80),
+                    unique=False,
+                    nullable=False)
+
+  def __repr__(self):
+    return f"ProgramType('{self.name}'"
+
+class AgeGroups(db.Model):
+  __tablename__ = 'age_groups'
+
+  id = db.Column(db.Integer,
+                  primary_key=True)
+
+  name = db.Column(db.String(80),
+                    unique=False,
+                    nullable=False)
+
+  def __repr__(self):
+    return f"ProgramAge('{self.name}'"
+
+
+program_types: db.Table('program_types',
+                    db.Column('program_iid', db.Integer, db.ForeignKey('programs.id'), primary_key=True),
+                    db.Column('program_type_id', db.Integer, db.ForeignKey('program_type.id'), primary_key=True)
+                    )
+
+program_ages: db.Table('program_ages',
+                    db.Column('program_id', db.Integer, db.ForeignKey('programs.id'), primary_key=True),
+                    db.Column('program_age_id', db.Integer, db.ForeignKey('age_groups.id'), primary_key=True)
+                    )

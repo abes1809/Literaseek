@@ -1,4 +1,7 @@
 from flask import render_template, Blueprint, request, redirect
+# from app.database import db
+from app.database import db
+from app.models import Organization
 from .forms import directoryFilterForm
 
 directory_blueprint = Blueprint('directory', __name__, template_folder='templates')
@@ -10,12 +13,16 @@ def directory():
 		return search_results(form)
  
 	else: 
-		organization = {
-			'name': '826CHI',
-			'description': '826CHI is a non-profit organization dedicated to supporting students ages 6 to 18 with their creative and expository writing skills, and to helping teachers inspire their students to write. Our services are structured around the understanding that great leaps in learning can happen with one-on-one attention, and that strong writing skills are fundamental to future success.',
-			'website': 'http://www.826chi.org,http://www.826chi.org',
-			'phone': '3122225555'
-		}
+		qry = Organization.query.all()
+		organizations = qry
+
+		# organization = {
+		# 	'name': '826CHI',
+		# 	'description': '826CHI is a non-profit organization dedicated to supporting students ages 6 to 18 with their creative and expository writing skills, and to helping teachers inspire their students to write. Our services are structured around the understanding that great leaps in learning can happen with one-on-one attention, and that strong writing skills are fundamental to future success.',
+		# 	'website': 'http://www.826chi.org,http://www.826chi.org',
+		# 	'phone': '3122225555'
+		# }
+
 		program = {
 			'name': 'AIM High',
 			'presenting_organization': 'Center for Companies That Care',
@@ -25,7 +32,7 @@ def directory():
 			'program_ages': 'Grades 9-12, Adults',
 			'neighborhoods': 'Far Southwest Side, North Side, South Side, Southwest Side, West Side'
 		}
-		return render_template('index.html', organization=organization, program=program, form=form)
+		return render_template('index.html', organizations=organizations, program=program, form=form)
 
 @directory_blueprint.route('/results')
 def search_results(search):
