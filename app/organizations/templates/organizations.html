@@ -20,6 +20,22 @@
     	<h3> {{ organization.website }} </h3>
     	<h3> {{ organization.phone }} </h3>
         <h3> {{ organization.last_updated }} </h3>
+
+        {% for program in organization.programs %}
+            <h2> Programs ran by {{ organization.name }}</h2>
+            <h3>{{program.name}}</h3>
+
+            {% for type in program.program_type %}
+                <h3> Type: </h3>
+                <h3>{{type.name}}</h3>
+            {% endfor %}
+
+            {% for age in program.age_groups %}
+                <h3> Ages: </h3>
+                <h3>{{age.name}}</h3>
+            {% endfor %}
+
+        {% endfor %}
     </div>
     {% endfor %}
 

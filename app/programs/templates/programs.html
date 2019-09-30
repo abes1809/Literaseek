@@ -3,6 +3,19 @@
 {% block content %}
     <h1>All Programs</h1>
 
+    <h3>Filter</h3>
+    <form action="" method="post" novalidate>
+        <dl>
+            {{ form.search_name }}<br>
+        </p>
+        </dl>
+        <dl>
+            {{ form.select_age }}<br>
+        </p>
+        </dl>
+        <p>{{ form.submit }} </p>
+    </form>
+
     {% for program in programs %}
     <div>
     	<h1> Programs </h1> 

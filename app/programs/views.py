@@ -1,17 +1,32 @@
 from flask import render_template, Blueprint, request, redirect
-from app.models import Program, Organization
+from app.models import Program
+from .forms import programFilterForm
 
 programs_blueprint = Blueprint('programs', __name__, template_folder='templates')
 
 @programs_blueprint.route('/programs', methods=['GET', 'POST'])
 
 def programs():
-	# if request.method == "POST":
-	# 	return true
-	# else: 
-	# join = Program.query.join(Organization).join(
-	# 	Organization, Program.id == League.id).
+	form = programFilterForm(request.form)
 
-	programs = Program.query.all()
+	if request.method == "POST":
+		return program_search(form)
 
-	return render_template('programs.html', programs=programs)
+	else:
+		programs = Program.query.all()
+
+		return render_template('programs.html', programs=programs, form=form)
+
+@programs_blueprint.route('/org_search')
+def program_search(search):
+	search_name = search.data['search_name']
+	age_groups_select = search.data['select_age']
+
+	print("+++++HERE+++++++++")
+	print(age_groups_select)
+
+	programs = Program.query.filter(Program.name.like('%'+search_name+'%'), 
+									Program.age_groups.any(name=age_groups_select)).all()
+
+	form = programFilterForm(request.form)
+	return render_template('programs.html', programs=programs, form=form)
