@@ -1,5 +1,4 @@
 from flask import render_template, Blueprint, request, redirect
-# from app.database import db
 from app.database import db
 from app.models import Organization
 from .forms import directoryFilterForm

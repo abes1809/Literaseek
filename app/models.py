@@ -1,7 +1,7 @@
-import enum
-from datetime import date
 from flask_sqlalchemy import SQLAlchemy
 from app.database import db
+from datetime import date
+from sqlalchemy.orm import relationship
 
 class Organization(db.Model):
 
@@ -30,12 +30,15 @@ class Organization(db.Model):
                       unique=False,
                       nullable=True)
 
+  programs = relationship("Program", 
+                      back_populates="organizations")
+
   last_updated = db.Column(db.DateTime,
                             nullable=False,
                             default=date.today(),
                             )
   def __repr__(self):
-    return f"Organization('{self.name}', '{self.description}', '{self.address}', '{self.website}', '{self.phone}', '{self.last_updated}')"
+    return f"Organization('{self.name}', '{self.description}', '{self.address}', '{self.website}', '{self.phone}', '{self.programs}', '{self.last_updated}')"
 
 
 
@@ -75,13 +78,41 @@ class Program(db.Model):
                     unique=True, 
                     nullable=False)
 
+  organizations = relationship("Organization", 
+                      back_populates="programs")
+
+  program_type = relationship(
+        "ProgramType",
+        secondary='program_types',
+        back_populates="programs")
+
+  age_groups = relationship(
+        "AgeGroups",
+        secondary='program_ages',
+        back_populates="programs")
+
+  neighborhoods = relationship(
+        "Neighborhoods",
+        secondary='neighborhood_programs',
+        back_populates="programs")
+
+  zip_codes = relationship(
+        "ZipCodes",
+        secondary='zipcode_programs',
+        back_populates="programs")
+
+  schools = relationship(
+        "Schools",
+        secondary='schoool_programs',
+        back_populates="programs")
+
   last_updated = db.Column(db.DateTime,
                             nullable=False,
                             default=date.today(),
                             )
 
   def __repr__(self):
-    return f"Program('{self.name}', '{self.description}', '{self.volunteers_needed}', '{self.open_public_school_enrollement}') , '{self.website}', , '{self.phone}', '{self.org_id}', '{self.last_updated}'"
+    return f"Program('{self.name}', '{self.description}', '{self.volunteers_needed}', '{self.open_public_school_enrollement}') , '{self.website}', , '{self.phone}', '{self.org_id}', '{self.organizations}', '{self.program_type}','{self.age_groups}','{self.neighborhoods}','{self.zip_codes}','{self.schools}','{self.last_updated}'"
 
 
 # location tables
@@ -97,9 +128,23 @@ class Neighborhoods(db.Model):
                   unique=False,
                   nullable=False)
 
-  def __repr__(self):
-    return f"Neighborhood('{self.name}'"
+  programs = relationship(
+        "Program",
+        secondary='neighborhood_programs',
+        back_populates="neighborhoods")
 
+  zip_codes = relationship(
+        "ZipCodes",
+        secondary='neighborhood_zips',
+        back_populates="neighborhoods")
+
+  schools = relationship(
+        "Schools",
+        secondary='neighborhood_schools',
+        back_populates="neighborhoods")
+
+  def __repr__(self):
+    return f"Neighborhood({self.name}','{self.programs}','{self.zip_codes}','{self.schools}')"
 
   # ???
 
@@ -114,8 +159,23 @@ class ZipCodes(db.Model):
                     unique=True,
                     nullable=False)
 
+  programs = relationship(
+        "Program",
+        secondary='zipcode_programs',
+        back_populates="zip_codes")
+
+  neighborhoods = relationship(
+        "Neighborhoods",
+        secondary='neighborhood_zips',
+        back_populates="zip_codes")
+
+  schools = relationship(
+        "Schools",
+        secondary='school_zips',
+        back_populates="zip_codes")
+
   def __repr__(self):
-    return f"ZipCode('{self.name}'"
+    return f"ZipCode('{self.name}','{self.programs}','{self.neighborhoods}','{self.schools}'"
 
   # ??
 
@@ -130,8 +190,23 @@ class Schools(db.Model):
                     unique=True,
                     nullable=False)
 
+  programs = relationship(
+        "Program",
+        secondary='schoool_programs',
+        back_populates="schools")
+
+  neighborhoods = relationship(
+        "Neighborhoods",
+        secondary='neighborhood_schools',
+        back_populates="schools")
+
+  zip_codes = relationship(
+        "ZipCodes",
+        secondary='school_zips',
+        back_populates="schools")
+
   def __repr__(self):
-    return f"School('{self.name}'"
+    return f"School('{self.name}','{self.programs}','{self.neighborhoods}','{self.zip_codes}'"
 
   # ??
 
@@ -181,9 +256,13 @@ class ProgramType(db.Model):
   name = db.Column(db.String(80),
                     unique=False,
                     nullable=False)
+  programs = relationship(
+        "Program",
+        secondary='program_types',
+        back_populates="program_type")
 
   def __repr__(self):
-    return f"ProgramType('{self.name}'"
+    return f"ProgramType('{self.name}','{self.programs}'"
 
 class AgeGroups(db.Model):
   __tablename__ = 'age_groups'
@@ -195,8 +274,13 @@ class AgeGroups(db.Model):
                     unique=False,
                     nullable=False)
 
+  programs = relationship(
+        "Program",
+        secondary='program_ages',
+        back_populates="age_groups")
+
   def __repr__(self):
-    return f"ProgramAge('{self.name}'"
+    return f"ProgramAge('{self.name}','{self.programs}'"
 
 
 program_types: db.Table('program_types',

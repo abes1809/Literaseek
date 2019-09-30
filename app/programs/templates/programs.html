@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>All Programs</h1>
+
+    {% for program in programs %}
+    <div>
+    	<h1> Programs </h1> 
+    	<h2> {{ program.name }} </h2>
+    	<h3> {{ program.descripiton }} </h3>
+        <h3> {{ program.volunteers_needed }} </h3>
+    	<h3> {{ program.website }} </h3>
+    	<h3> {{ program.phone }} </h3>
+        <h3> {{ program.last_updated }} </h3>
+
+        <h2> Presenting Organization </h2>
+            <h3> {{ program.organizations.name }} </h3>
+            <h3> {{ program.organizations.address }} </h3>
+
+        <h2> Other information </h2>
+            {% for type in program.program_type %}
+                <h3> Type: </h3>
+                <h3>{{type.name}}</h3>
+            {% endfor %}
+
+            {% for age in program.age_groups %}
+                <h3> Ages: </h3>
+                <h3>{{age.name}}</h3>
+            {% endfor %}
+    </div>
+    {% endfor %}
+
+{% endblock %}

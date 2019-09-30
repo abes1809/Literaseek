@@ -7,4 +7,3 @@ class directoryFilterForm(Form):
 	]
 	select = SelectField('Filter by Program or Organization:', choices=choices)
 	submit = SubmitField('Filter')
-

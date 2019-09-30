@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>All Organizations</h1>
+
+    <h3>Filter</h3>
+    <form action="" method="post" novalidate>
+        <dl>
+            {{ form.search_name }}<br>
+        </p>
+        </dl>
+        <p>{{ form.submit }} </p>
+    </form>
+
+    {% for organization in organizations %}
+    <div>
+    	<h1> Organizations </h1> 
+    	<h2> {{ organization.name }} </h2>
+    	<h3> {{ organization.descripiton }} </h3>
+    	<h3> {{ organization.website }} </h3>
+    	<h3> {{ organization.phone }} </h3>
+        <h3> {{ organization.last_updated }} </h3>
+    </div>
+    {% endfor %}
+
+{% endblock %}
