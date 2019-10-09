@@ -22,6 +22,18 @@ class Organization(db.Model):
                       unique=False,
                       nullable=True)
 
+  city = db.Column(db.String(120),
+                      unique=False,
+                      nullable=True)
+
+  state = db.Column(db.String(120),
+                      unique=False,
+                      nullable=True)
+
+  zipcode = db.Column(db.String(120),
+                      unique=False,
+                      nullable=True)
+
   phone = db.Column(db.String(80),
                     unique=False,
                     nullable=True)
@@ -75,7 +87,7 @@ class Program(db.Model):
 
   org_id = db.Column(db.Integer,
                     db.ForeignKey('organizations.id'),
-                    unique=True, 
+                    unique=False, 
                     nullable=False)
 
   organizations = relationship("Organization", 
@@ -190,6 +202,18 @@ class Schools(db.Model):
                     unique=True,
                     nullable=False)
 
+  grade = db.Column(db.String(80),
+                    unique=False,
+                    nullable=False)
+
+  address = db.Column(db.String(120),
+                      unique=False,
+                      nullable=True)
+
+  type = db.Column(db.String(80),
+                    unique=False,
+                    nullable=False)
+
   programs = relationship(
         "Program",
         secondary='schoool_programs',
@@ -283,12 +307,13 @@ class AgeGroups(db.Model):
     return f"ProgramAge('{self.name}','{self.programs}'"
 
 
-program_types: db.Table('program_types',
+
+program_types = db.Table('program_types',
                     db.Column('program_iid', db.Integer, db.ForeignKey('programs.id'), primary_key=True),
                     db.Column('program_type_id', db.Integer, db.ForeignKey('program_type.id'), primary_key=True)
                     )
 
-program_ages: db.Table('program_ages',
+program_ages = db.Table('program_ages',
                     db.Column('program_id', db.Integer, db.ForeignKey('programs.id'), primary_key=True),
                     db.Column('program_age_id', db.Integer, db.ForeignKey('age_groups.id'), primary_key=True)
                     )
