@@ -27,8 +27,18 @@ class programFilterForm(Form):
 		('Other', 'Other'),
 	]
 
+	neighborhoods = [
+		('Bridgeport', 'Bridgeport'),
+		('Chinatown', 'Chinatown'),
+		('Lakeview', 'Lakeview'),
+		('Rogers Park', 'Rogers Park'),
+	]
+
+	# regions []
+
 	open_for_public_school_enrollment = BooleanField('Open for Public School Enrollment', validators=[DataRequired()])
 	select_age = SelectMultipleField('Filter by program age group:', choices=age_choices)
 	select_type = SelectMultipleField('Filter by program type:', choices=type_choices)
+	neighborhoods = SelectMultipleField('Filter by neighborhoods:', choices=neighborhoods)
 	search_name = StringField('Search By Name', validators=[DataRequired()])
 	submit = SubmitField('Filter')

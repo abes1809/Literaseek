@@ -256,7 +256,7 @@ class Schools(db.Model):
   # ??
 
     # program join tables
-neighborhood_programs: db.Table('neighborhood_programs',
+neighborhood_programs = db.Table('neighborhood_programs',
                     db.Column('region_id', db.Integer, db.ForeignKey('regions.id'), primary_key=True),
                     db.Column('program_id', db.Integer, db.ForeignKey('programs.id'), primary_key=True)
                     )
