@@ -13,7 +13,18 @@
             {{ form.select_age }}<br>
         </p>
         </dl>
-        <p>{{ form.submit }} </p>
+         <dl>
+            {{ form.select_type }}<br>
+        </p>
+        </dl>
+         <dl>
+            {{ form.select_type }}<br>
+        </p>
+        <p> open for public school enrollment? </p>
+        </dl>
+        <p>{{ form.open_for_public_school_enrollment }} </p>
+
+        <p> {{ form.submit }} </p>
     </form>
 
     {% for program in programs %}
@@ -30,6 +41,10 @@
             <h3> {{ program.organizations.name }} </h3>
             <h3> {{ program.organizations.address }} </h3>
 
+        <h2> City Region Offered </h2>
+            {% for region in program.regions %}
+                <h3> {{region.name }} </h3>
+            {% endfor %}
         <h2> Other information </h2>
             {% for type in program.program_type %}
                 <h3> Type: </h3>

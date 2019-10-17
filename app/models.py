@@ -103,20 +103,20 @@ class Program(db.Model):
         secondary='program_ages',
         back_populates="programs")
 
-  neighborhoods = relationship(
-        "Neighborhoods",
+  regions = relationship(
+        "Regions",
         secondary='neighborhood_programs',
         back_populates="programs")
 
-  zip_codes = relationship(
-        "ZipCodes",
-        secondary='zipcode_programs',
-        back_populates="programs")
+  # zip_codes = relationship(
+  #       "ZipCodes",
+  #       secondary='zipcode_programs',
+  #       back_populates="programs")
 
-  schools = relationship(
-        "Schools",
-        secondary='schoool_programs',
-        back_populates="programs")
+  # schools = relationship(
+  #       "Schools",
+  #       secondary='schoool_programs',
+  #       back_populates="programs")
 
   last_updated = db.Column(db.DateTime,
                             nullable=False,
@@ -140,10 +140,15 @@ class Neighborhoods(db.Model):
                   unique=False,
                   nullable=False)
 
-  programs = relationship(
-        "Program",
-        secondary='neighborhood_programs',
-        back_populates="neighborhoods")
+  region_id = db.Column(db.Integer,
+                    db.ForeignKey('regions.id'),
+                    unique=False, 
+                    nullable=False)
+
+  # programs = relationship(
+  #       "Program",
+  #       secondary='neighborhood_programs',
+  #       back_populates="neighborhoods")
 
   zip_codes = relationship(
         "ZipCodes",
@@ -160,6 +165,22 @@ class Neighborhoods(db.Model):
 
   # ???
 
+class Regions(db.Model):
+
+  __tablename__ = "regions"
+
+  id = db.Column(db.Integer,
+                  primary_key=True)
+
+  name = db.Column(db.String(80),
+                    unique=True,
+                    nullable=False)
+
+  programs = relationship(
+        "Program",
+        secondary='neighborhood_programs',
+        back_populates="regions")
+
 class ZipCodes(db.Model):
 
   __tablename__ = "zip_codes"
@@ -171,10 +192,10 @@ class ZipCodes(db.Model):
                     unique=True,
                     nullable=False)
 
-  programs = relationship(
-        "Program",
-        secondary='zipcode_programs',
-        back_populates="zip_codes")
+  # programs = relationship(
+  #       "Program",
+  #       secondary='zipcode_programs',
+  #       back_populates="zip_codes")
 
   neighborhoods = relationship(
         "Neighborhoods",
@@ -214,10 +235,10 @@ class Schools(db.Model):
                     unique=False,
                     nullable=False)
 
-  programs = relationship(
-        "Program",
-        secondary='schoool_programs',
-        back_populates="schools")
+  # programs = relationship(
+  #       "Program",
+  #       secondary='schoool_programs',
+  #       back_populates="schools")
 
   neighborhoods = relationship(
         "Neighborhoods",
@@ -236,19 +257,19 @@ class Schools(db.Model):
 
     # program join tables
 neighborhood_programs: db.Table('neighborhood_programs',
-                    db.Column('neighborhood_id', db.Integer, db.ForeignKey('neighborhoods.id'), primary_key=True),
+                    db.Column('region_id', db.Integer, db.ForeignKey('regions.id'), primary_key=True),
                     db.Column('program_id', db.Integer, db.ForeignKey('programs.id'), primary_key=True)
                     )
 
-zipcode_programs: db.Table('zipcode_programs',
-                    db.Column('zip_id', db.Integer, db.ForeignKey('zip_codes.id'), primary_key=True),
-                    db.Column('program_id', db.Integer, db.ForeignKey('programs.id'), primary_key=True)
-                    )
+# zipcode_programs: db.Table('zipcode_programs',
+#                     db.Column('zip_id', db.Integer, db.ForeignKey('zip_codes.id'), primary_key=True),
+#                     db.Column('program_id', db.Integer, db.ForeignKey('programs.id'), primary_key=True)
+#                     )
 
-schoool_programs: db.Table('schoool_programs',
-                    db.Column('school_id', db.Integer, db.ForeignKey('schools.id'), primary_key=True),
-                    db.Column('program_id', db.Integer, db.ForeignKey('programs.id'), primary_key=True)
-                    )
+# schoool_programs: db.Table('schoool_programs',
+#                     db.Column('school_id', db.Integer, db.ForeignKey('schools.id'), primary_key=True),
+#                     db.Column('program_id', db.Integer, db.ForeignKey('programs.id'), primary_key=True)
+#                     )
 
 
 # join tables for locations
