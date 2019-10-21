@@ -23,6 +23,8 @@ def program_search(search):
 
 	programs = Program.query.join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).filter(*conditions).all()
 
+	print(programs)
+
 	form = programFilterForm(request.form)
 	return render_template('programs.html', programs=programs, form=form)
 

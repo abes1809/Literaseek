@@ -108,15 +108,6 @@ class Program(db.Model):
         secondary='neighborhood_programs',
         back_populates="programs")
 
-  # zip_codes = relationship(
-  #       "ZipCodes",
-  #       secondary='zipcode_programs',
-  #       back_populates="programs")
-
-  # schools = relationship(
-  #       "Schools",
-  #       secondary='schoool_programs',
-  #       back_populates="programs")
 
   last_updated = db.Column(db.DateTime,
                             nullable=False,
@@ -124,7 +115,7 @@ class Program(db.Model):
                             )
 
   def __repr__(self):
-    return f"Program('{self.name}', '{self.description}', '{self.volunteers_needed}', '{self.open_public_school_enrollement}') , '{self.website}', , '{self.phone}', '{self.org_id}', '{self.organizations}', '{self.program_type}','{self.age_groups}','{self.neighborhoods}','{self.zip_codes}','{self.schools}','{self.last_updated}'"
+    return f"Program('{self.name}', '{self.description}', '{self.volunteers_needed}', '{self.open_public_school_enrollement}') , '{self.website}', , '{self.phone}', '{self.org_id}', '{self.organizations}', '{self.program_type}','{self.age_groups}','{self.regions}','{self.last_updated}'"
 
 
 # location tables
@@ -145,6 +136,9 @@ class Neighborhoods(db.Model):
                     unique=False, 
                     nullable=False)
 
+  regions = relationship("Regions", 
+                      back_populates="neighborhoods")
+
   # programs = relationship(
   #       "Program",
   #       secondary='neighborhood_programs',
@@ -152,16 +146,18 @@ class Neighborhoods(db.Model):
 
   zip_codes = relationship(
         "ZipCodes",
+        lazy='select',
         secondary='neighborhood_zips',
         back_populates="neighborhoods")
 
   schools = relationship(
         "Schools",
+        lazy='select',
         secondary='neighborhood_schools',
         back_populates="neighborhoods")
 
   def __repr__(self):
-    return f"Neighborhood({self.name}','{self.programs}','{self.zip_codes}','{self.schools}')"
+    return f"Neighborhood({self.name}','{self.regions}','{self.zip_codes}','{self.schools}')"
 
   # ???
 
@@ -180,6 +176,12 @@ class Regions(db.Model):
         "Program",
         secondary='neighborhood_programs',
         back_populates="regions")
+
+  neighborhoods = relationship("Neighborhoods", 
+                      back_populates="regions")
+
+  def __repr__(self):
+    return f"Region('{self.name}','{self.programs}','{self.neighborhoods}'"
 
 class ZipCodes(db.Model):
 
@@ -208,7 +210,7 @@ class ZipCodes(db.Model):
         back_populates="zip_codes")
 
   def __repr__(self):
-    return f"ZipCode('{self.name}','{self.programs}','{self.neighborhoods}','{self.schools}'"
+    return f"ZipCode('{self.name}','{self.neighborhoods}','{self.schools}'"
 
   # ??
 
@@ -251,7 +253,7 @@ class Schools(db.Model):
         back_populates="schools")
 
   def __repr__(self):
-    return f"School('{self.name}','{self.programs}','{self.neighborhoods}','{self.zip_codes}'"
+    return f"School('{self.name}','{self.neighborhoods}','{self.zip_codes}'"
 
   # ??
 
@@ -274,17 +276,17 @@ neighborhood_programs = db.Table('neighborhood_programs',
 
 # join tables for locations
 
-neighborhood_zips: db.Table('neighborhood_zips',
+neighborhood_zips = db.Table('neighborhood_zips',
                     db.Column('neighborhood_id', db.Integer, db.ForeignKey('neighborhoods.id'), primary_key=True),
                     db.Column('zip_id', db.Integer, db.ForeignKey('zip_codes.id'), primary_key=True)
                     )
 
-school_zips: db.Table('school_zips',
+school_zips = db.Table('school_zips',
                     db.Column('school_id', db.Integer, db.ForeignKey('schools.id'), primary_key=True),
                     db.Column('zip_id', db.Integer, db.ForeignKey('zip_codes.id'), primary_key=True)
                     )
 
-neighborhood_schools: db.Table('neighborhood_schools',
+neighborhood_schools = db.Table('neighborhood_schools',
                     db.Column('neighborhood_id', db.Integer, db.ForeignKey('neighborhoods.id'), primary_key=True),
                     db.Column('school_id', db.Integer, db.ForeignKey('schools.id'), primary_key=True)
                     )
