@@ -21,12 +21,12 @@ def programs():
 def program_search(search):
 	conditions = identify_filters(search)
 
-	programs = Program.query.join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).filter(*conditions).all()
+	all_programs = Program.query.join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).filter(*conditions).all()
 
-	print(programs)
+	print(all_programs)
 
 	form = programFilterForm(request.form)
-	return render_template('programs.html', programs=programs, form=form)
+	return render_template('programs.html', programs=all_programs, form=form)
 
 
 def identify_filters(search):

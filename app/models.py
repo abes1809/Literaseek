@@ -43,7 +43,7 @@ class Organization(db.Model):
                       nullable=True)
 
   programs = relationship("Program", 
-                      back_populates="organizations")
+                      back_populates="organization")
 
   last_updated = db.Column(db.DateTime,
                             nullable=False,
@@ -90,9 +90,6 @@ class Program(db.Model):
                     unique=False, 
                     nullable=False)
 
-  organizations = relationship("Organization", 
-                      back_populates="programs")
-
   program_type = relationship(
         "ProgramType",
         secondary='program_types',
@@ -115,7 +112,7 @@ class Program(db.Model):
                             )
 
   def __repr__(self):
-    return f"Program('{self.name}', '{self.description}', '{self.volunteers_needed}', '{self.open_public_school_enrollement}') , '{self.website}', , '{self.phone}', '{self.org_id}', '{self.organizations}', '{self.program_type}','{self.age_groups}','{self.regions}','{self.last_updated}'"
+    return f"Program('{self.name}', '{self.description}', '{self.volunteers_needed}', '{self.open_public_school_enrollement}') , '{self.website}', '{self.phone}', '{self.org_id}', '{self.program_type}','{self.age_groups}','{self.regions}','{self.last_updated}'"
 
 
 # location tables
@@ -146,13 +143,11 @@ class Neighborhoods(db.Model):
 
   zip_codes = relationship(
         "ZipCodes",
-        lazy='select',
         secondary='neighborhood_zips',
         back_populates="neighborhoods")
 
   schools = relationship(
         "Schools",
-        lazy='select',
         secondary='neighborhood_schools',
         back_populates="neighborhoods")
 
