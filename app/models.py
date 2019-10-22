@@ -43,7 +43,7 @@ class Organization(db.Model):
                       nullable=True)
 
   programs = relationship("Program", 
-                      back_populates="organization")
+                      backref="organization")
 
   last_updated = db.Column(db.DateTime,
                             nullable=False,
@@ -93,17 +93,17 @@ class Program(db.Model):
   program_type = relationship(
         "ProgramType",
         secondary='program_types',
-        back_populates="programs")
+        backref="programs")
 
   age_groups = relationship(
         "AgeGroups",
         secondary='program_ages',
-        back_populates="programs")
+        backref="programs")
 
   regions = relationship(
         "Regions",
         secondary='neighborhood_programs',
-        back_populates="programs")
+        backref="programs")
 
 
   last_updated = db.Column(db.DateTime,
@@ -112,7 +112,7 @@ class Program(db.Model):
                             )
 
   def __repr__(self):
-    return f"Program('{self.name}', '{self.description}', '{self.volunteers_needed}', '{self.open_public_school_enrollement}') , '{self.website}', '{self.phone}', '{self.org_id}', '{self.program_type}','{self.age_groups}','{self.regions}','{self.last_updated}'"
+    return f"Program('{self.name}', '{self.description}', '{self.volunteers_needed}', '{self.open_public_school_enrollement}') , '{self.website}', , '{self.phone}', '{self.org_id}', '{self.organization}', '{self.program_type}','{self.age_groups}','{self.regions}','{self.last_updated}'"
 
 
 # location tables
@@ -133,23 +133,15 @@ class Neighborhoods(db.Model):
                     unique=False, 
                     nullable=False)
 
-  regions = relationship("Regions", 
-                      back_populates="neighborhoods")
-
-  # programs = relationship(
-  #       "Program",
-  #       secondary='neighborhood_programs',
-  #       back_populates="neighborhoods")
-
   zip_codes = relationship(
         "ZipCodes",
         secondary='neighborhood_zips',
-        back_populates="neighborhoods")
+        backref="neighborhoods")
 
   schools = relationship(
         "Schools",
         secondary='neighborhood_schools',
-        back_populates="neighborhoods")
+        backref="neighborhoods")
 
   def __repr__(self):
     return f"Neighborhood({self.name}','{self.regions}','{self.zip_codes}','{self.schools}')"
@@ -167,13 +159,8 @@ class Regions(db.Model):
                     unique=True,
                     nullable=False)
 
-  programs = relationship(
-        "Program",
-        secondary='neighborhood_programs',
-        back_populates="regions")
-
   neighborhoods = relationship("Neighborhoods", 
-                      back_populates="regions")
+                      backref="regions")
 
   def __repr__(self):
     return f"Region('{self.name}','{self.programs}','{self.neighborhoods}'"
@@ -189,20 +176,10 @@ class ZipCodes(db.Model):
                     unique=True,
                     nullable=False)
 
-  # programs = relationship(
-  #       "Program",
-  #       secondary='zipcode_programs',
-  #       back_populates="zip_codes")
-
-  neighborhoods = relationship(
-        "Neighborhoods",
-        secondary='neighborhood_zips',
-        back_populates="zip_codes")
-
   schools = relationship(
         "Schools",
         secondary='school_zips',
-        back_populates="zip_codes")
+        backref="zip_codes")
 
   def __repr__(self):
     return f"ZipCode('{self.name}','{self.neighborhoods}','{self.schools}'"
@@ -232,21 +209,6 @@ class Schools(db.Model):
                     unique=False,
                     nullable=False)
 
-  # programs = relationship(
-  #       "Program",
-  #       secondary='schoool_programs',
-  #       back_populates="schools")
-
-  neighborhoods = relationship(
-        "Neighborhoods",
-        secondary='neighborhood_schools',
-        back_populates="schools")
-
-  zip_codes = relationship(
-        "ZipCodes",
-        secondary='school_zips',
-        back_populates="schools")
-
   def __repr__(self):
     return f"School('{self.name}','{self.neighborhoods}','{self.zip_codes}'"
 
@@ -271,17 +233,17 @@ neighborhood_programs = db.Table('neighborhood_programs',
 
 # join tables for locations
 
-neighborhood_zips = db.Table('neighborhood_zips',
+neighborhood_zips: db.Table('neighborhood_zips',
                     db.Column('neighborhood_id', db.Integer, db.ForeignKey('neighborhoods.id'), primary_key=True),
                     db.Column('zip_id', db.Integer, db.ForeignKey('zip_codes.id'), primary_key=True)
                     )
 
-school_zips = db.Table('school_zips',
+school_zips: db.Table('school_zips',
                     db.Column('school_id', db.Integer, db.ForeignKey('schools.id'), primary_key=True),
                     db.Column('zip_id', db.Integer, db.ForeignKey('zip_codes.id'), primary_key=True)
                     )
 
-neighborhood_schools = db.Table('neighborhood_schools',
+neighborhood_schools: db.Table('neighborhood_schools',
                     db.Column('neighborhood_id', db.Integer, db.ForeignKey('neighborhoods.id'), primary_key=True),
                     db.Column('school_id', db.Integer, db.ForeignKey('schools.id'), primary_key=True)
                     )
@@ -298,10 +260,6 @@ class ProgramType(db.Model):
   name = db.Column(db.String(80),
                     unique=False,
                     nullable=False)
-  programs = relationship(
-        "Program",
-        secondary='program_types',
-        back_populates="program_type")
 
   def __repr__(self):
     return f"ProgramType('{self.name}','{self.programs}'"
@@ -315,11 +273,6 @@ class AgeGroups(db.Model):
   name = db.Column(db.String(80),
                     unique=False,
                     nullable=False)
-
-  programs = relationship(
-        "Program",
-        secondary='program_ages',
-        back_populates="age_groups")
 
   def __repr__(self):
     return f"ProgramAge('{self.name}','{self.programs}'"
