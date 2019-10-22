@@ -28,13 +28,14 @@ class programFilterForm(Form):
 	]
 
 	neighborhoods = [
-		('Bridgeport', 'Bridgeport'),
-		('Chinatown', 'Chinatown'),
-		('Lakeview', 'Lakeview'),
-		('Rogers Park', 'Rogers Park'),
+		('South Side', 'Bridgeport'),
+		('South Side', 'Chinatown'),
+		('North Side', 'Lakeview'),
+		('Far North Side', 'Rogers Park'),
+		('West Side', 'United Center'),
+		('South Side', 'Armour Square'),
+		('Far Southwest Side', 'Avalon Park'),
 	]
-
-	# regions []
 
 	open_for_public_school_enrollment = BooleanField('Open for Public School Enrollment', validators=[DataRequired()])
 	select_age = SelectMultipleField('Filter by program age group:', choices=age_choices)

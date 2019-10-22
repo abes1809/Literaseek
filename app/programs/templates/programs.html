@@ -18,7 +18,7 @@
         </p>
         </dl>
          <dl>
-            {{ form.select_type }}<br>
+            {{ form.neighborhoods }}<br>
         </p>
         <p> open for public school enrollment? </p>
         </dl>
@@ -44,19 +44,18 @@
         <h2> City Region Offered </h2>
             {% for region in program.regions %}
                 <h3> {{region.name }} </h3>
+
+                <!-- {% for neighborhood in region.neighborhoods %}
+
+                 <h3>{{neighborhood.name}}</h3>
+
+                {% endfor %} -->
+
             {% endfor %}
         <h2> Other information </h2>
             {% for type in program.program_type %}
                 <h3> Type: </h3>
                 <h3>{{type.name}}</h3>
-            {% endfor %}
-
-            <h3>Neighborhoods</h3>
-
-            {% for neighborhood in program.regions.neighborhoods %}
-
-            <h3>{{neighborhood.name}}</h3>
-
             {% endfor %}
 
             <h3>Open Pub Enrollment?</h3>

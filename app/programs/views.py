@@ -13,7 +13,6 @@ def programs():
 
 	else:
 		programs = Program.query.join(neighborhood_programs).join(Regions).join(Neighborhoods).all()
-		print(programs)
 
 		return render_template('programs.html', programs=programs, form=form)
 
@@ -28,11 +27,11 @@ def program_search(search):
 
 
 def identify_filters(search):
-
 	search_name = search.data['search_name']
 	age_groups_select = search.data['select_age']
 	type_select = search.data['select_type']
 	open_for_public_school_enrollment = search.data['open_for_public_school_enrollment']
+	search_neighborhoods =  search.data["neighborhoods"]
 
 	conditions = []
 
@@ -47,5 +46,8 @@ def identify_filters(search):
 
 	if open_for_public_school_enrollment:
 		conditions.append(Program.open_public_school_enrollement.is_(open_for_public_school_enrollment))
+
+	if search_neighborhoods:
+		conditions.append(Regions.name.in_(search_neighborhoods))
 
 	return conditions

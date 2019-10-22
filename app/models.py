@@ -43,7 +43,7 @@ class Organization(db.Model):
                       nullable=True)
 
   programs = relationship("Program", 
-                      backref="organization")
+                      backref="organizations")
 
   last_updated = db.Column(db.DateTime,
                             nullable=False,
@@ -112,7 +112,7 @@ class Program(db.Model):
                             )
 
   def __repr__(self):
-    return f"Program('{self.name}', '{self.description}', '{self.volunteers_needed}', '{self.open_public_school_enrollement}') , '{self.website}', , '{self.phone}', '{self.org_id}', '{self.organization}', '{self.program_type}','{self.age_groups}','{self.regions}','{self.last_updated}'"
+    return f"Program('{self.name}', '{self.description}', '{self.volunteers_needed}', '{self.open_public_school_enrollement}') , '{self.website}', , '{self.phone}', '{self.org_id}', '{self.organizations}', '{self.program_type}','{self.age_groups}','{self.regions}','{self.last_updated}'"
 
 
 # location tables
@@ -233,17 +233,17 @@ neighborhood_programs = db.Table('neighborhood_programs',
 
 # join tables for locations
 
-neighborhood_zips: db.Table('neighborhood_zips',
+neighborhood_zips = db.Table('neighborhood_zips',
                     db.Column('neighborhood_id', db.Integer, db.ForeignKey('neighborhoods.id'), primary_key=True),
                     db.Column('zip_id', db.Integer, db.ForeignKey('zip_codes.id'), primary_key=True)
                     )
 
-school_zips: db.Table('school_zips',
+school_zips = db.Table('school_zips',
                     db.Column('school_id', db.Integer, db.ForeignKey('schools.id'), primary_key=True),
                     db.Column('zip_id', db.Integer, db.ForeignKey('zip_codes.id'), primary_key=True)
                     )
 
-neighborhood_schools: db.Table('neighborhood_schools',
+neighborhood_schools = db.Table('neighborhood_schools',
                     db.Column('neighborhood_id', db.Integer, db.ForeignKey('neighborhoods.id'), primary_key=True),
                     db.Column('school_id', db.Integer, db.ForeignKey('schools.id'), primary_key=True)
                     )
