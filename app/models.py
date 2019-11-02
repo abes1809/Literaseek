@@ -133,6 +133,10 @@ class Neighborhoods(db.Model):
                     unique=False, 
                     nullable=False)
 
+  SHAPE = db.Column(db.Geometry(geometry_type='POINT', srid=4326),
+                      unique=False,
+                      nullable=False)
+  
   zip_codes = relationship(
         "ZipCodes",
         secondary='neighborhood_zips',
