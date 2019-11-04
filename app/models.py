@@ -1,7 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from app.database import db
 from datetime import date
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship 
+# from geoalchemy import *
 
 class Organization(db.Model):
 
@@ -133,9 +134,7 @@ class Neighborhoods(db.Model):
                     unique=False, 
                     nullable=False)
 
-  SHAPE = db.Column(db.Geometry(geometry_type='POINT', srid=4326),
-                      unique=False,
-                      nullable=False)
+  # SHAPE = db.Column(GeometryColumn(Polygon(2)))
   
   zip_codes = relationship(
         "ZipCodes",

@@ -16,6 +16,8 @@ pymysql.install_as_MySQLdb()
 
 migrate = Migrate()
 
+_static_folder = os.path.abspath("static/")
+
 def create_app():
 	app = Flask(__name__,  instance_relative_config=False)
 	app.config.from_object(Config)

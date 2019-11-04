@@ -3,6 +3,8 @@
 {% block content %}
     <h1>All Programs</h1>
 
+    <div id="program_map"></div>
+
     <h3>Filter</h3>
     <form action="" method="post" novalidate>
         <dl>
@@ -67,5 +69,7 @@
             {% endfor %}
     </div>
     {% endfor %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename = 'map.js') }}"></script>
 
 {% endblock %}

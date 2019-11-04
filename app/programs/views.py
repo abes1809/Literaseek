@@ -1,4 +1,6 @@
-from flask import render_template, Blueprint, request, redirect
+from flask import render_template, Blueprint, request, redirect, session
+from app.database import db
+from sqlalchemy import create_engine
 from app.models import Program, AgeGroups, ProgramType, program_ages, program_types, neighborhood_programs, Neighborhoods, Regions
 from .forms import programFilterForm
 
@@ -12,6 +14,7 @@ def programs():
 		return program_search(form)
 
 	else:
+		# neighborhoods = get_neighborhoods()
 		programs = Program.query.join(neighborhood_programs).join(Regions).join(Neighborhoods).all()
 
 		return render_template('programs.html', programs=programs, form=form)
@@ -51,3 +54,12 @@ def identify_filters(search):
 		conditions.append(Regions.name.in_(search_neighborhoods))
 
 	return conditions
+
+def get_neighborhoods():
+	engine = create_engine(db)
+	connection = engine.connect()
+
+	my_query = 'SELECT * FROM neighborhoods'
+	results = connection.execute(my_query).fetchall()
+
+	return results
