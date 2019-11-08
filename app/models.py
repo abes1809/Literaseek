@@ -158,6 +158,18 @@ class Neighborhoods(db.Model):
         secondary='neighborhood_schools',
         backref="neighborhoods")
 
+  def to_dict(self):
+    geo = eval(self.SHAPE)
+
+    return {
+    'type': "Feature",
+    "properties":
+      {'id': self.id,
+      'name': self.name,
+      'region_id': self.region_id},
+    'geometry': geo
+    }
+
   def __repr__(self):
     return f"Neighborhood({self.name}','{self.regions}', '{self.SHAPE}')"
 

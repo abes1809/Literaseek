@@ -14,19 +14,9 @@ def programs():
 		return program_search(form)
 
 	else:
-		# neighborhoods = get_neighborhoods()
 		programs = Program.query.join(neighborhood_programs).join(Regions).join(Neighborhoods).all()
-		all_neighborhoods = Neighborhoods.query.all()
-		# print(all_neighborhoods)
 
-		all_neighborhoods = {all_neighborhoods[i]: all_neighborhoods[i + 1] for i in range(0, len(all_neighborhoods), 2)}
-
-		# print(dictOfWords)
-
-		# all_neighborhoods = jsonify({'neighborhoods': dictOfWords})
-
-
-		return render_template('programs.html', programs=programs, form=form, neighborhoods=all_neighborhoods)
+		return render_template('programs.html', programs=programs, form=form)
 
 @programs_blueprint.route('/org_search')
 def program_search(search):
@@ -42,13 +32,8 @@ def program_search(search):
 def get_neighborhoods():
 
 	all_neighborhoods = Neighborhoods.query.all()
-	# print(all_neighborhoods)
 
-	dictOfWords = { value["key"]: value["value"] for value in values }
-
-	print(dictOfWords)
-
-	all_neighborhoods = jsonify({'neighborhoods': dictOfWords})
+	all_neighborhoods = jsonify([neiborhood.to_dict() for neiborhood in all_neighborhoods])
 
 	return all_neighborhoods
 
