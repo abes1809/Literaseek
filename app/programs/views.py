@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, redirect, session
+from flask import Flask, render_template, Blueprint, request, redirect, jsonify
 from app.database import db
 from sqlalchemy import create_engine
 from app.models import Program, AgeGroups, ProgramType, program_ages, program_types, neighborhood_programs, Neighborhoods, Regions
@@ -16,8 +16,17 @@ def programs():
 	else:
 		# neighborhoods = get_neighborhoods()
 		programs = Program.query.join(neighborhood_programs).join(Regions).join(Neighborhoods).all()
+		all_neighborhoods = Neighborhoods.query.all()
+		# print(all_neighborhoods)
 
-		return render_template('programs.html', programs=programs, form=form)
+		all_neighborhoods = {all_neighborhoods[i]: all_neighborhoods[i + 1] for i in range(0, len(all_neighborhoods), 2)}
+
+		# print(dictOfWords)
+
+		# all_neighborhoods = jsonify({'neighborhoods': dictOfWords})
+
+
+		return render_template('programs.html', programs=programs, form=form, neighborhoods=all_neighborhoods)
 
 @programs_blueprint.route('/org_search')
 def program_search(search):
@@ -27,6 +36,21 @@ def program_search(search):
 
 	form = programFilterForm(request.form)
 	return render_template('programs.html', programs=all_programs, form=form)
+
+
+@programs_blueprint.route('/get_neighborhoods', methods=['GET'])
+def get_neighborhoods():
+
+	all_neighborhoods = Neighborhoods.query.all()
+	# print(all_neighborhoods)
+
+	dictOfWords = { value["key"]: value["value"] for value in values }
+
+	print(dictOfWords)
+
+	all_neighborhoods = jsonify({'neighborhoods': dictOfWords})
+
+	return all_neighborhoods
 
 
 def identify_filters(search):
@@ -54,12 +78,3 @@ def identify_filters(search):
 		conditions.append(Regions.name.in_(search_neighborhoods))
 
 	return conditions
-
-def get_neighborhoods():
-	engine = create_engine(db)
-	connection = engine.connect()
-
-	my_query = 'SELECT * FROM neighborhoods'
-	results = connection.execute(my_query).fetchall()
-
-	return results

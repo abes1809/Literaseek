@@ -1,8 +1,20 @@
 from flask_sqlalchemy import SQLAlchemy
 from app.database import db
 from datetime import date
-from sqlalchemy.orm import relationship 
-# from geoalchemy import *
+from sqlalchemy.orm import relationship
+from sqlalchemy import func
+from sqlalchemy.types import UserDefinedType
+
+class Geometry(UserDefinedType):
+    def get_col_spec(self):
+        return "GEOMETRY"
+
+    def bind_expression(self, bindvalue):
+        return func.ST_GeomFromText(bindvalue, type_=self)
+
+    def column_expression(self, col):
+        return func.ST_AsGeoJson(col, type_=self)
+
 
 class Organization(db.Model):
 
@@ -113,7 +125,7 @@ class Program(db.Model):
                             )
 
   def __repr__(self):
-    return f"Program('{self.name}', '{self.description}', '{self.volunteers_needed}', '{self.open_public_school_enrollement}') , '{self.website}', , '{self.phone}', '{self.org_id}', '{self.organizations}', '{self.program_type}','{self.age_groups}','{self.regions}','{self.last_updated}'"
+    return f"Program('{self.name}', '{self.description}', '{self.volunteers_needed}', '{self.open_public_school_enrollement}') , '{self.website}', , '{self.phone}', '{self.org_id}', '{self.organizations}', '{self.program_type}','{self.age_groups}','{self.regions}','{self.last_updated}')"
 
 
 # location tables
@@ -134,7 +146,7 @@ class Neighborhoods(db.Model):
                     unique=False, 
                     nullable=False)
 
-  # SHAPE = db.Column(GeometryColumn(Polygon(2)))
+  SHAPE = db.Column(Geometry, nullable=False)
   
   zip_codes = relationship(
         "ZipCodes",
@@ -147,7 +159,7 @@ class Neighborhoods(db.Model):
         backref="neighborhoods")
 
   def __repr__(self):
-    return f"Neighborhood({self.name}','{self.regions}','{self.zip_codes}','{self.schools}')"
+    return f"Neighborhood({self.name}','{self.regions}', '{self.SHAPE}')"
 
   # ???
 
@@ -166,7 +178,7 @@ class Regions(db.Model):
                       backref="regions")
 
   def __repr__(self):
-    return f"Region('{self.name}','{self.programs}','{self.neighborhoods}'"
+    return f"Region('{self.name}'"
 
 class ZipCodes(db.Model):
 
@@ -185,7 +197,7 @@ class ZipCodes(db.Model):
         backref="zip_codes")
 
   def __repr__(self):
-    return f"ZipCode('{self.name}','{self.neighborhoods}','{self.schools}'"
+    return f"ZipCode('{self.name}')"
 
   # ??
 
@@ -213,7 +225,7 @@ class Schools(db.Model):
                     nullable=False)
 
   def __repr__(self):
-    return f"School('{self.name}','{self.neighborhoods}','{self.zip_codes}'"
+    return f"School('{self.name}')"
 
   # ??
 
@@ -265,7 +277,7 @@ class ProgramType(db.Model):
                     nullable=False)
 
   def __repr__(self):
-    return f"ProgramType('{self.name}','{self.programs}'"
+    return f"ProgramType('{self.name}'"
 
 class AgeGroups(db.Model):
   __tablename__ = 'age_groups'
@@ -278,7 +290,7 @@ class AgeGroups(db.Model):
                     nullable=False)
 
   def __repr__(self):
-    return f"ProgramAge('{self.name}','{self.programs}'"
+    return f"ProgramAge('{self.name}')"
 
 
 

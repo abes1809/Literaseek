@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 
 {% block content %}
     <h1>All Programs</h1>
@@ -50,6 +50,7 @@
                 <!-- {% for neighborhood in region.neighborhoods %}
 
                  <h3>{{neighborhood.name}}</h3>
+                  <h3>{{neighborhood.SHAPE}}</h3>
 
                 {% endfor %} -->
 
@@ -71,5 +72,10 @@
     {% endfor %}
 
     <script type="text/javascript" src="{{ url_for('static', filename = 'map.js') }}"></script>
+    <script type="text/javascript"> 
+        var neighborhoods = '{{ neighborhoods }}';
+        console.log("here");
+        console.log(neighborhoods)
+    </script>
 
 {% endblock %}
