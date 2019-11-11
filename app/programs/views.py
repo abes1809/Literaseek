@@ -1,4 +1,6 @@
-from flask import render_template, Blueprint, request, redirect
+from flask import Flask, render_template, Blueprint, request, redirect, jsonify
+from app.database import db
+from sqlalchemy import create_engine
 from app.models import Program, AgeGroups, ProgramType, program_ages, program_types, neighborhood_programs, Neighborhoods, Regions
 from .forms import programFilterForm
 
@@ -24,6 +26,16 @@ def program_search(search):
 
 	form = programFilterForm(request.form)
 	return render_template('programs.html', programs=all_programs, form=form)
+
+
+@programs_blueprint.route('/get_neighborhoods', methods=['GET'])
+def get_neighborhoods():
+
+	all_neighborhoods = Neighborhoods.query.all()
+
+	all_neighborhoods = jsonify([neiborhood.to_dict() for neiborhood in all_neighborhoods])
+
+	return all_neighborhoods
 
 
 def identify_filters(search):
