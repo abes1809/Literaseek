@@ -1,15 +1,6 @@
 $(function(){
 
-	function get_neighborhood_data(){
-    	$.ajax({
-            url: 'http://localhost:5000/get_neighborhoods',
-            success: create_neighborhood_layer,
-            error: function(error){
-            	console.log(error)
-            }
-        });
-    }
-
+	/** base map */
 	var map = L.map('program_map').setView([41.881832, -87.623177], 13);
 
     var Stamen_Terrain = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}', {
@@ -21,12 +12,73 @@ $(function(){
 
     map.addLayer(Stamen_Terrain);
 
+    /** hover listener for program region highlight */
+
+	function get_neighborhood_data(){
+    	$.ajax({
+            url: 'http://localhost:5000/neighborhoods',
+            success: create_neighborhood_layer,
+            error: function(error){
+            	console.log(error)
+            }
+        });
+    }
+
     function create_neighborhood_layer(result) {
 
 	    // neighborhood layer style
 
+	    function create_highlights(program_region_ids){	  
+	    	neighborhoods_layer.eachLayer(function (layer) {
+	    		var layer_region_id = layer['feature']['properties']['region_id'];
+	    		for (let i in program_region_ids) {
+	    			if (program_region_ids[i]['id'] == layer_region_id){
+	    				layer.setStyle({fillColor: get_highlight_color(layer_region_id)})
+	    			}
+	    		}
+	    	});
+	    }
+
+	    function reset_highlight(){
+	    	neighborhoods_layer.eachLayer(function (layer) {
+	    		var layer_region_id = layer['feature']['properties']['region_id'];
+				layer.setStyle({fillColor: getColor(layer_region_id)})	
+	    	});
+	    }
+
+	    function get_highlight_color(region_id){
+	    	if (region_id == 1) { 
+				var fillColor = '#fc9272'
+			} 
+			else if (region_id == 2) { 
+				var fillColor = '#9ecae1'
+			}
+			else if (region_id == 3) { 
+				var fillColor = '#a1d99b'
+			}
+			else if (region_id == 4) { 
+				var fillColor = '#edf8b1'
+			}
+			else if (region_id == 5) { 
+				var fillColor = '#bdbdbd'
+			}
+			else if (region_id == 6) { 
+				var fillColor = '#987654'
+			}
+			else if (region_id == 7) { 
+				var fillColor = '#9ebcda'
+			}
+			else if (region_id == 8) { 
+				var fillColor = '#fdae6b'
+			}
+			else if (region_id == 9) { 
+				var fillColor = '#a6bddb'
+			}
+
+			return fillColor
+	    }
+
 	    function getColor(region_id) {
-	    	console.log(region_id);
 			if (region_id == 1) { 
 				var color = 'red'
 			} 
@@ -81,6 +133,32 @@ $(function(){
 	        console.log("fired");
 	        neighborhoods_layer.resetStyle(e.target);
 	    };
+
+    	$('.program').hover(
+			function(event) {
+
+				var elem = $(event.currentTarget);
+				elem = elem[0]["childNodes"][3]["innerText"];
+				get_program_region_id(elem);
+
+				function get_program_region_id(elem){
+			    	return $.ajax({
+			            url: 'http://localhost:5000/program_region_ids/' + elem,
+			            success: function(data){
+			            	var program_region_ids = data[0]['region_ids'];
+			            	create_highlights(program_region_ids);
+			            },
+			            error: function(error){
+			            	console.log(error)
+			            }
+			        });
+			    };
+
+			},
+			function(event){
+				reset_highlight();
+			}
+    	);
 
 	    function style(feature) {
 	        return {

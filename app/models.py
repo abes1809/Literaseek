@@ -124,6 +124,12 @@ class Program(db.Model):
                             default=date.today(),
                             )
 
+  def to_dict(self):
+    return {
+    'name': self.name,
+    'region_ids': [region.to_dict() for region in self.regions],
+    }
+
   def __repr__(self):
     return f"Program('{self.name}', '{self.description}', '{self.volunteers_needed}', '{self.open_public_school_enrollement}') , '{self.website}', , '{self.phone}', '{self.org_id}', '{self.organizations}', '{self.program_type}','{self.age_groups}','{self.regions}','{self.last_updated}')"
 
@@ -189,8 +195,14 @@ class Regions(db.Model):
   neighborhoods = relationship("Neighborhoods", 
                       backref="regions")
 
+  def to_dict(self):
+    return {
+    'id': self.id,
+    'name': self.name
+    }
+
   def __repr__(self):
-    return f"Region('{self.name}'"
+    return f"Region({self.name}"
 
 class ZipCodes(db.Model):
 
