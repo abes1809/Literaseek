@@ -127,7 +127,7 @@ class Program(db.Model):
   def to_dict(self):
     return {
     'name': self.name,
-    'region_ids': [region.to_dict() for region in self.regions],
+    'regions': [region.to_dict() for region in self.regions],
     }
 
   def __repr__(self):

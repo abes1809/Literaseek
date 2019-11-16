@@ -115,19 +115,19 @@ $(function(){
 	    }
 
 	    function highlightFeature(e) {
-	            var layer = e.target;
+            var layer = e.target;
 
-	            layer.setStyle({
-	                weight: 5,
-	                color: '#666',
-	                dashArray: '',
-	                fillOpacity: 0.7
-	            });
+            layer.setStyle({
+                weight: 5,
+                color: '#666',
+                dashArray: '',
+                fillOpacity: 0.7
+            });
 
-	            if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-	                layer.bringToFront();
-	            }
-	        };
+            if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                layer.bringToFront();
+            }
+        };
 
 	    function resetHighlight(e) {
 	        console.log("fired");
@@ -145,7 +145,7 @@ $(function(){
 			    	return $.ajax({
 			            url: 'http://localhost:5000/program_region_ids/' + elem,
 			            success: function(data){
-			            	var program_region_ids = data[0]['region_ids'];
+			            	var program_region_ids = data[0]['regions'];
 			            	create_highlights(program_region_ids);
 			            },
 			            error: function(error){

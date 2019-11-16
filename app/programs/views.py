@@ -37,13 +37,13 @@ def neighborhoods():
 
 	return all_neighborhoods
 
-@programs_blueprint.route('/program_region_ids/<program_name>', methods=['GET'])
-def program_region_ids(program_name):
+@programs_blueprint.route('/program_regions/<program_name>', methods=['GET'])
+def program_regions(program_name):
 	data = Program.query.filter(Program.name == program_name).all()
-	program_region_ids = jsonify([neiborhood.to_dict() for neiborhood in data])
+	program_regions = jsonify([neiborhood.to_dict() for neiborhood in data])
 
 
-	return program_region_ids
+	return program_regions
 
 
 def identify_filters(search):
