@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, redirect
+from flask import render_template, Blueprint, request, redirect, jsonify
 from app.models import Organization, Program, AgeGroups, ProgramType, program_ages, program_types, neighborhood_programs, Neighborhoods, Regions
 from .forms import organizationFilterForm
 
@@ -13,9 +13,9 @@ def organizations():
 		return org_search(form)
 
 	else:
-		organizations = Organization.query.all()
+		all_organizations = Organization.query.all()
 
-		return render_template('organizations.html', organizations=organizations, form=form)
+		return render_template('organizations.html', organizations=all_organizations, form=form)
 
 
 @organizations_blueprint.route('/org_search')
@@ -27,6 +27,15 @@ def org_search(search):
 	form = organizationFilterForm(request.form)
 
 	return render_template('organizations.html', organizations=organizations, form=form)
+
+
+# @organizations_blueprint.route('/organization_data')
+# def organization_data(organizations):
+
+# 	organization_locations = jsonify([organization.to_dict() for organization in organizations])
+
+# 	return organization_locations
+
 
 
 def identify_filters(search):

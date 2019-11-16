@@ -1,7 +1,9 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 
 {% block content %}
     <h1>All Organizations</h1>
+
+    <div id="organization_map"></div>
 
     <h3>Filter</h3>
     <form action="" method="post" novalidate>
@@ -48,5 +50,7 @@
         {% endfor %}
     </div>
     {% endfor %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename = 'organization_map.js') }}"></script>
 
 {% endblock %}

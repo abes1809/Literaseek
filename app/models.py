@@ -62,6 +62,21 @@ class Organization(db.Model):
                             nullable=False,
                             default=date.today(),
                             )
+
+  def to_dict(self):
+    return {
+    'id': self.id,
+    'name': self.name,
+    'address': self.address,
+    'description': self.description,
+    'city': self.city,
+    'state': self.state,
+    'zipcode': self.zipcode,
+    'phone': self.phone,
+    'website': self.website,
+    'last_updated': self.last_updated
+    }
+
   def __repr__(self):
     return f"Organization('{self.name}', '{self.description}', '{self.address}', '{self.website}', '{self.phone}', '{self.programs}', '{self.last_updated}')"
 
