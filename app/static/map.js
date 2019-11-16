@@ -28,11 +28,11 @@ $(function(){
 
 	    // neighborhood layer style
 
-	    function create_highlights(program_region_ids){	  
+	    function create_highlights(program_regions){	  
 	    	neighborhoods_layer.eachLayer(function (layer) {
 	    		var layer_region_id = layer['feature']['properties']['region_id'];
-	    		for (let i in program_region_ids) {
-	    			if (program_region_ids[i]['id'] == layer_region_id){
+	    		for (let i in program_regions) {
+	    			if (program_regions[i]['id'] == layer_region_id){
 	    				layer.setStyle({fillColor: get_highlight_color(layer_region_id)})
 	    			}
 	    		}
@@ -139,14 +139,14 @@ $(function(){
 
 				var elem = $(event.currentTarget);
 				elem = elem[0]["childNodes"][3]["innerText"];
-				get_program_region_id(elem);
+				get_program_region(elem);
 
-				function get_program_region_id(elem){
+				function get_program_region(elem){
 			    	return $.ajax({
-			            url: 'http://localhost:5000/program_region_ids/' + elem,
+			            url: 'http://localhost:5000/program_regions/' + elem,
 			            success: function(data){
-			            	var program_region_ids = data[0]['regions'];
-			            	create_highlights(program_region_ids);
+			            	var program_regions = data[0]['regions'];
+			            	create_highlights(program_regions);
 			            },
 			            error: function(error){
 			            	console.log(error)
