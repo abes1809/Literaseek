@@ -51,6 +51,12 @@
     </div>
     {% endfor %}
 
+    <div id="all_orgs" class="all_orgs" style="visibility: hidden">
+        {% for organization in organizations %}
+            {{ organization.id }},
+        {% endfor %}
+    </div>
+
     <script type="text/javascript" src="{{ url_for('static', filename = 'organization_map.js') }}"></script>
 
 {% endblock %}

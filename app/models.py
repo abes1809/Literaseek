@@ -4,6 +4,7 @@ from datetime import date
 from sqlalchemy.orm import relationship
 from sqlalchemy import func
 from sqlalchemy.types import UserDefinedType
+import geocoder
 
 class Geometry(UserDefinedType):
     def get_col_spec(self):
@@ -51,6 +52,14 @@ class Organization(db.Model):
                     unique=False,
                     nullable=True)
 
+  latitude = db.Column(db.Float,
+                        unique=True, 
+                        nullable=True)
+
+  longitude = db.Column(db.Float,
+                        unique=True, 
+                        nullable=True)
+
   website = db.Column(db.Text,  
                       unique=False,
                       nullable=True)
@@ -64,6 +73,7 @@ class Organization(db.Model):
                             )
 
   def to_dict(self):
+
     return {
     'id': self.id,
     'name': self.name,

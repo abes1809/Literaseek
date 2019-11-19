@@ -1,6 +1,6 @@
 // import * as ELG from "esri-leaflet-geocoder";
 
-$(function(){
+$(function(){ 
 
 		/** to hold layers for controller */
 
@@ -37,8 +37,20 @@ $(function(){
 	    }
 
 	    function get_organization_marker_data(){
+
+	    	var org_ids = $( "div.all_orgs" ).html();
+	    	var org_ids = org_ids.split(',');
+
+	    	for(let i = 0; i < org_ids.length; i++){
+	    		org_ids[i] = org_ids[i].trim();
+	    	}
+
+	    	org_ids = {ids: org_ids}
+
 	    	$.ajax({
-	    		url: 'https://localhost:5000/organization_locations',
+	    		url: '/organization_data',
+	    		type: "GET",
+	    		data: org_ids,
 	    		success: create_organization_layer,
 	    		error: function(error){
 	    			console.log(error)
@@ -134,5 +146,12 @@ $(function(){
 		        }).addTo(map);
 	    };
 
+	    function create_organization_layer(result) {
+	    	console.log("here");
+	    	console.log(result);
+	    };
+
 	    get_neighborhood_data();
+	    get_organization_marker_data();
+
 })
