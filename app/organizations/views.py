@@ -1,11 +1,11 @@
 from flask import render_template, Blueprint, request, redirect
 from app.models import Organization, Program, AgeGroups, ProgramType, program_ages, program_types, neighborhood_programs, Neighborhoods, Regions
 from .forms import organizationFilterForm
+from twilio.rest import Client
 
 organizations_blueprint = Blueprint('organizations', __name__, template_folder='templates')
 
 @organizations_blueprint.route('/organizations', methods=['GET', 'POST'])
-
 def organizations():
 	form = organizationFilterForm(request.form)
 
@@ -27,7 +27,6 @@ def org_search(search):
 	form = organizationFilterForm(request.form)
 
 	return render_template('organizations.html', organizations=organizations, form=form)
-
 
 def identify_filters(search):
 	search_name = search.data['search_name']

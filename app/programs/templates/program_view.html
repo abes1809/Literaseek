@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="program_view">
+		{% for program in programs %}
+			<h1> {{ program.name }} </h1> 
+			<h3> {{ program.description }} </h3>
+		    <h3> {{ program.volunteers_needed }} </h3>
+			<h3> {{ program.website }} </h3>
+			<h3> {{ program.phone }} </h3>
+		    <h3> {{ program.last_updated }} </h3>
+
+        <h2> Presenting Organization </h2>
+            <h3> {{ program.organizations.name }} </h3>
+            <h3> {{ program.organizations.address }} </h3>
+
+        <h2> City Region Offered </h2>
+            {% for region in program.regions %}
+                <h3> {{region.name }} </h3>
+            {% endfor %}
+        <h2> Other information </h2>
+            {% for type in program.program_type %}
+                <h3> Type: </h3>
+                <h3>{{type.name}}</h3>
+            {% endfor %}
+
+            <h3>Open Pub Enrollment?</h3>
+            <h3>{{program.open_public_school_enrollement}}</h3>
+
+            {% for age in program.age_groups %}
+                <h3> Ages: </h3>
+                <h3>{{age.name}}</h3>
+            {% endfor %}
+    </div>
+
+    <form action="" method="post" novalidate>
+    	<p>Input Phone Number:</p>
+        <p>
+            {{ form.user_number }}
+        </p>
+        <p>Input Email Address:</p>
+        <p>
+            {{ form.user_email }}
+        </p>
+        <p>
+            {{ form.submit2 }}
+        </p>
+    </form>
+{% endfor %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename = 'map.js') }}"></script>
+
+{% endblock %}
