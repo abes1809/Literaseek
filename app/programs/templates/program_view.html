@@ -31,7 +31,6 @@
                 <h3> Ages: </h3>
                 <h3>{{age.name}}</h3>
             {% endfor %}
-    </div>
 
     <form action="" method="post" novalidate>
     	<p>Input Phone Number:</p>
@@ -46,6 +45,13 @@
             {{ form.submit2 }}
         </p>
     </form>
+
+    {% set Google_URL = "https://maps.google.com/?daddr=" + program.organizations.address + "," + program.organizations.city + "," + program.organizations.state + "," + program.organizations.zipcode%}}
+
+    <p> <a href="{{Google_URL}}" target="_blank">Get Directions!</a></p>
+
+  </div>
+
 {% endfor %}
 
     <script type="text/javascript" src="{{ url_for('static', filename = 'map.js') }}"></script>

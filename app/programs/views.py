@@ -100,7 +100,6 @@ def sendEmail(form):
 	api_key = os.environ.get('MAILGUNAPI')
 	request_url = "https://api.mailgun.net/v3/" + domain + "/messages"
 
-	print('HERE')
 	response = requests.post(
 	        request_url,
 	        auth=("api", api_key),
