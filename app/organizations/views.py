@@ -70,19 +70,19 @@ def identify_filters(search):
 
 def update_lat_lon():
 
-		all_organizations = Organization.query.all()
+	all_organizations = Organization.query.all()
 
-		for organization in all_organizations: 
-			full_address = organization.address + ", " + organization.city + ", " + organization.state + ", " + organization.zipcode
+	for organization in all_organizations: 
+		full_address = organization.address + ", " + organization.city + ", " + organization.state + ", " + organization.zipcode
 
-			latlong = geocoder.osm(full_address).json
+		latlong = geocoder.osm(full_address).json
 
-			latitude = latlong['lat']
+		latitude = latlong['lat']
 
-			longitude = latlong['lng']
+		longitude = latlong['lng']
 
-			organization.latitude = latitude
+		organization.latitude = latitude
 
-			organization.longitude = longitude
+		organization.longitude = longitudes
 
-			return all_organizations
+	return all_organizations
