@@ -5,8 +5,6 @@ import click
 
 organizations_blueprint = Blueprint('organizations', __name__, template_folder='templates')
 
-@organizations_blueprint.cli.command("update-lat-lon")
-
 @organizations_blueprint.route('/organizations', methods=['GET', 'POST'])
 def organizations():
 	form = organizationFilterForm(request.form)
@@ -34,17 +32,12 @@ def org_search(search):
 @organizations_blueprint.route('/organization_data', methods=['GET', 'POST'])
 def organization_data():
 	org_ids = request.args.getlist('ids[]')
-
+	
 	organizations = Organization.query.filter(Organization.id.in_(org_ids)).all()
 
 	organizations = jsonify([organization.to_dict() for organization in organizations])
 
-	print("THISHERE")
-	print(organizations)
-
 	return organizations
-
-
 
 def identify_filters(search):
 	search_name = search.data['search_name']
@@ -67,22 +60,3 @@ def identify_filters(search):
 		conditions.append(Regions.name.in_(search_neighborhoods))
 
 	return conditions
-
-def update_lat_lon():
-
-	all_organizations = Organization.query.all()
-
-	for organization in all_organizations: 
-		full_address = organization.address + ", " + organization.city + ", " + organization.state + ", " + organization.zipcode
-
-		latlong = geocoder.osm(full_address).json
-
-		latitude = latlong['lat']
-
-		longitude = latlong['lng']
-
-		organization.latitude = latitude
-
-		organization.longitude = longitudes
-
-	return all_organizations

@@ -1,5 +1,3 @@
-// import * as ELG from "esri-leaflet-geocoder";
-
 $(function(){ 
 
 		/** to hold layers for controller */
@@ -11,7 +9,7 @@ $(function(){
 		var map = L.map('organization_map').setView([41.881832, -87.623177], 13);
 
 		var Stamen_Terrain = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}', {
-		   attribution: 'Stamen',
+		   attribution: 'Map tiles by ' + '<a href="http://stamen.com">Stamen Design</a>' + ', under ' + '<a href="http://creativecommons.org/licenses/by/3.0">' + 'CC BY 3.0' + '</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>' + ', under' + '<a href="http://www.openstreetmap.org/copyright">ODbL</a>',
 		   minZoom: 0,
 		   maxZoom: 20,
 		   ext: 'jpg'
@@ -45,7 +43,7 @@ $(function(){
 	    		org_ids[i] = org_ids[i].trim();
 	    	}
 
-	    	org_ids = {ids: org_ids}
+	    	org_ids = {ids: org_ids};
 
 	    	$.ajax({
 	    		url: '/organization_data',
@@ -142,16 +140,57 @@ $(function(){
 		    var neighborhoods_layer = L.geoJSON(result,
 		        {   
 		            style: style,
+		            pane: "pane250",
 		            onEachFeature: onEachFeature
-		        }).addTo(map);
+		        }).addTo(map)
+
+		    overlayMaps["Neighborhoods"] = neighborhoods_layer;
+
+		    create_map_layers();
 	    };
 
 	    function create_organization_layer(result) {
-	    	console.log("here");
-	    	console.log(result);
+
+	    	var geojsonMarkerOptions = {
+	    	            radius: 8,
+	    	            fillColor: "grey",
+	    	            color: "#000",
+	    	            weight: 1,
+	    	            opacity: 1,
+	    	            fillOpacity: 1,
+	    	        };
+
+	        function onEachFeature(feature, layer) {
+	            if (feature.properties && feature.properties.name && feature.properties.address){
+	                layer.bindPopup("Organization Name: " + feature.properties.name + "Address: " + feature.properties.address);
+	            }
+	        };
+
+	        var organizations_layer = L.geoJSON(result,
+	        {
+	            pointToLayer: function (feature, latlng) {
+	                    return L.circleMarker(latlng, geojsonMarkerOptions);
+	                },
+	            pane: "pane450",
+	            onEachFeature: onEachFeature
+	        }
+	        ).addTo(map)
+
+	        overlayMaps["Organizations"] = organizations_layer;
 	    };
 
-	    get_neighborhood_data();
+	    /** stack all map layers */
+
+	    function create_map_layers(){
+
+	        baseMap = {
+	            "terrain": Stamen_Terrain
+	        };
+
+	        L.control.layers(baseMap, overlayMaps).addTo(map);
+	    };
+
 	    get_organization_marker_data();
+	    get_neighborhood_data();
 
 })
