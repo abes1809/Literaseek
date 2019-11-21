@@ -51,6 +51,14 @@ class Organization(db.Model):
                     unique=False,
                     nullable=True)
 
+  latitude = db.Column(db.Float,
+                        unique=False, 
+                        nullable=True)
+
+  longitude = db.Column(db.Float,
+                        unique=False, 
+                        nullable=True)
+
   website = db.Column(db.Text,  
                       unique=False,
                       nullable=True)
@@ -62,6 +70,20 @@ class Organization(db.Model):
                             nullable=False,
                             default=date.today(),
                             )
+
+  def to_dict(self):
+
+    return {
+    'type': "Feature",
+    "properties":
+      {'id': self.id,
+      'name': self.name,
+      'address': self.address},
+    'geometry':
+      {"type": "Point",
+      "coordinates": [self.longitude, self.latitude]}
+    }
+
   def __repr__(self):
     return f"Organization('{self.name}', '{self.description}', '{self.address}', '{self.website}', '{self.phone}', '{self.programs}', '{self.last_updated}')"
 
