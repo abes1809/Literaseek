@@ -1,7 +1,7 @@
 from flask import Flask, render_template, Blueprint, request, redirect, jsonify
 from app.database import db
 from sqlalchemy import create_engine
-from app.models import Program, AgeGroups, ProgramType, program_ages, program_types, neighborhood_programs, Neighborhoods, Regions
+from app.models import Program, AgeGroups, ProgramType, program_ages, program_types, neighborhood_programs, Neighborhoods, Regions, neighborhood_zips, ZipCodes
 from .forms import programFilterForm
 
 programs_blueprint = Blueprint('programs', __name__, template_folder='templates')
@@ -22,7 +22,7 @@ def programs():
 def program_search(search):
 	conditions = identify_filters(search)
 
-	all_programs = Program.query.join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).filter(*conditions).all()
+	all_programs = Program.query.join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).filter(*conditions).all()
 
 	form = programFilterForm(request.form)
 	return render_template('programs.html', programs=all_programs, form=form)
@@ -52,6 +52,7 @@ def identify_filters(search):
 	type_select = search.data['select_type']
 	open_for_public_school_enrollment = search.data['open_for_public_school_enrollment']
 	search_neighborhoods =  search.data["neighborhoods"]
+	search_zips =  search.data["zipcodes"]
 
 	conditions = []
 
@@ -69,5 +70,8 @@ def identify_filters(search):
 
 	if search_neighborhoods:
 		conditions.append(Regions.name.in_(search_neighborhoods))
+
+	if search_zips:
+		conditions.append(ZipCodes.name.in_(search_zips))
 
 	return conditions
