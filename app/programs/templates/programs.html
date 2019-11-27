@@ -22,6 +22,9 @@
          <dl>
             {{ form.neighborhoods }}<br>
         </p>
+         <dl>
+            {{ form.zipcodes }}<br>
+        </p>
         <p> open for public school enrollment? </p>
         </dl>
         <p>{{ form.open_for_public_school_enrollment }} </p>
@@ -47,12 +50,15 @@
             {% for region in program.regions %}
                 <h3> {{region.name }} </h3>
 
-                <!-- {% for neighborhood in region.neighborhoods %}
+                {% for neighborhood in region.neighborhoods %}
 
-                 <h3>{{neighborhood.name}}</h3>
-                  <h3>{{neighborhood.SHAPE}}</h3>
+                  {% for zipcode in neighborhood.zip_codes %}
 
-                {% endfor %} -->
+                  <h4> {{ zipcode.name }} </h4>
+
+                  {% endfor %}
+
+                {% endfor %}
 
             {% endfor %}
         <h2> Other information </h2>
