@@ -5,3 +5,12 @@
 #organization_map { 
 	height:500px ; 
 }
+
+.search-main-box {
+	background-color: grey;
+	height:500px;
+}
+
+.search-col {
+    align-items: center;
+}
