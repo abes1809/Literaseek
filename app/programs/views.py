@@ -18,8 +18,10 @@ def programs():
 
 		return render_template('programs.html', programs=programs, form=form)
 
-@programs_blueprint.route('/org_search')
+@programs_blueprint.route('/program_search', methods=['GET', 'POST'])
 def program_search(search):
+	print('HEREERE')
+
 	conditions = identify_filters(search)
 
 	all_programs = Program.query.join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).filter(*conditions).all()
