@@ -14,25 +14,53 @@
                         <div class="tab search-tab">
                             <button class="right-top subtitle-1 tablinks" id="defaultOpen" onclick="openSearch(event, 'Programs')">Programs</button>
                             <button class="left-top  subtitle-1 tablinks" onclick="openSearch(event, 'Organizations')">Organizations</button>
-                            <!-- <div class="right-top">
-                                <h1 class="subtitle-1 align-bottom">Programs</h1>
-                            </div>
-                            <div class="left-top">
-                                <h1 class="subtitle-1 align-bottom">Organizations</h1>
-                            </div> -->
                         </div>
 
-                       <div class="search-box-main">
+                       <div class="search-content row align-items-center">
 
-                           <div id="Programs" class="tabcontent">
-                             <h3>London</h3>
-                             <p>London is the capital city of England.</p>
-                           </div>
+                            <div class="row search-box">
+                               <div id="Programs" class="tabcontent">
+                                 <form action="" method="post" novalidate>
+                                    <div class="row main-general-search">
+                                       <h2 class="home-search-item-right">{{ form.program_main_search.label }}</h2>  
+                                       <h2 class="home-search-item-left">{{ form.program_main_search(class_="home-search-box") }}</h2>
+                                    </div>
+                                    <div class="row main-type-search"> 
+                                       <h2 class="home-search-item-right">{{ form.select_type.label }}</h2>  
+                                       <h2 class="home-search-item-left">{{ form.select_type(class_="main-type-select") }}</h2> 
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="align-items-center home-submit">
+                                            <label class="home-submit-button-all">{{ form.submit(class_="home-submit-buttom") }} <i class="fas fa-search search-icon"></i></label>
+                                        </div>
+                                    </div>
+                                 </form>
+                                 <div class="home-card-bottom">
+                                     <p> Use the Literaseek's search directory to find a literacy program near you</p>
+                                 </div>
+                                </div>
 
-                           <div id="Organizations" class="tabcontent">
-                             <h3>London2</h3>
-                             <p>London2 is the capital city of England.</p>
-                           </div>
+                                <div id="Organizations" class="tabcontent">
+                                  <form action="" method="post" novalidate>
+                                     <div class="row main-general-search">
+                                        <h2 class="home-search-item-right">{{ form.organizaion_main_search.label }}</h2>  
+                                        <h2 class="home-search-item-left">{{ form.organizaion_main_search(class_="home-search-box") }}</h2>
+                                     </div>
+                                     <div class="row main-type-search"> 
+                                        <h2 class="home-search-item-right">{{ form.select_type.label }}</h2>  
+                                        <h2 class="home-search-item-left">{{ form.select_type(class_="main-type-select") }}</h2> 
+                                     </div>
+                                     <div class="row align-items-center">
+                                         <div class="align-items-center home-submit">
+                                             <label class="home-submit-button-all">{{ form.submit(class_="home-submit-buttom") }} <i class="fas fa-search search-icon"></i></label>
+                                         </div>
+                                     </div>
+                                  </form>
+                                    <div class="home-card-bottom">
+                                        <p> Use the Literaseek's search directory to find a literacy organization near you</p>
+                                    </div>
+                                 </div>
+                            </div>
                            
                        </div>
                         
