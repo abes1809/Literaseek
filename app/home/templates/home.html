@@ -3,11 +3,40 @@
 {% block content %}
 
 <body>
-	<div class="container">
-		<div class="row d-flex justify-content-center">
+	<div class="search-container container">
+		<div class="row align-items-center h-100">
+			<div class="col-12 mx-auto">
+				<div class="search-card h-100 border-primary justify-content-center">
+                    <div class="search-title">
+                        <h1 class="title"> Start Your Search</h1>                    
+                    </div>
+                    <div class="search-main-box">
+                        <div class="tab search-tab">
+                            <button class="right-top subtitle-1 tablinks" id="defaultOpen" onclick="openSearch(event, 'Programs')">Programs</button>
+                            <button class="left-top  subtitle-1 tablinks" onclick="openSearch(event, 'Organizations')">Organizations</button>
+                            <!-- <div class="right-top">
+                                <h1 class="subtitle-1 align-bottom">Programs</h1>
+                            </div>
+                            <div class="left-top">
+                                <h1 class="subtitle-1 align-bottom">Organizations</h1>
+                            </div> -->
+                        </div>
 
-			<div class="col-md-6 search-col">
-				<div class="search-main-box">
+                       <div class="search-box-main">
+
+                           <div id="Programs" class="tabcontent">
+                             <h3>London</h3>
+                             <p>London is the capital city of England.</p>
+                           </div>
+
+                           <div id="Organizations" class="tabcontent">
+                             <h3>London2</h3>
+                             <p>London2 is the capital city of England.</p>
+                           </div>
+                           
+                       </div>
+                        
+                    </div>
 					
 				</div>
 
@@ -18,24 +47,6 @@
 	</div>
 </body>
 
+<script type="text/javascript" src="{{ url_for('static', filename = 'main.js') }}"></script>
 
-<!-- <div class="container d-flex h-100 flex-column">
-    <div class="flex-grow-1"></div>
-    <div class="row justify-content-center">
-        <div class="col-3">
-            <div class="card">ITEM A</div>
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-3">
-            <div class="card">ITEM B</div>
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-3">
-            <div class="card">ITEM C</div>
-        </div>
-    </div>
-    <div class="flex-grow-1"></div>
-</div> -->
 {% endblock %}
