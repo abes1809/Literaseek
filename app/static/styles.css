@@ -3,7 +3,7 @@ background-image: url(/styles/background-1.jpg);
 }
 
 #program_map { 
-	height: 500px; 
+	height: 600px; 
 }
 
 #organization_map { 
@@ -243,3 +243,28 @@ background-image: url(/styles/background-1.jpg);
     font-weight: bold;
 }
 
+/** programs/organizations index page **/
+
+@media (min-width: 1200px) {
+	.map-main-container {
+	    max-width: 85%;
+	}
+}
+
+.map-container {
+	height: 650px;
+	width: 800px;
+	position: fixed;
+	margin-top: 100px;
+}
+
+.map-right {
+	/*position: fixed;*/
+    top: 0;
+    bottom: 0;
+}
+
+/*.map-left {
+	overflow: auto;
+	height: auto;
+}*/
