@@ -291,13 +291,15 @@ body {
   display: none;
   overflow: hidden;
   background-color: #f1f1f1;
+  border-radius: 10px 10px;
+  border: .5px solid black;
 }
 
 .search-page-title {
 	padding: 15px 0px;
 	margin-top: 15px;
 	font-weight: bold;
-	font-size: 42px;
+	font-size: 35px;
 	color: white;
 }
 
@@ -321,4 +323,62 @@ body {
 .top-search-bar{
 	padding: 25px 20px;
 	background-color: #808080;
+}
+
+.main-search-label {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.main-search-input {
+	padding: 10px 50px;
+	margin-left: 10px;
+	border-radius: 10px 10px;
+	border: .5px solid black;
+}
+
+.main-search-input-multi {
+	padding: 8px 30px 20px 10px;
+	margin-left: 10px;
+	border-radius: 10px 10px;
+	border: .5px solid black;
+}
+
+.search-submit-buttom {
+	font-size: 25px;
+	font-weight: bold;
+	background-color: inherit;
+	border: inherit;
+	border-radius: inherit;
+}
+
+.search-submit-button-all{
+	display: unset;
+}
+
+dt {
+	float: left;
+}
+
+.search-card-title {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.search-card-sub-1 {
+	font-size: 22px;
+}
+
+.search-card-sub-2 {
+	font-size: 20px;
+}
+
+.search-card-updated {
+	font-size: 17px;
+	color:#A8A8A8;
+}
+
+.program-card {
+	padding: 15px 10px 15px 10px;
+	border-bottom: 1px solid #A8A8A8;
 }

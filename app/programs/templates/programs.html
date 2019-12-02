@@ -7,7 +7,7 @@
             <div class="container full-search-container">
 
             <div class="top-search-bar">
-                <h1 class="search-page-title">Find Literacy Programs</h1>
+                <h1 class="search-page-title">Programs Search Results</h1>
 
                 <button type="button" class="collapsible filter-open-button">Change Search <i class="fas fa-plus-square plus-icon"></i></button>
 
@@ -15,28 +15,37 @@
 
                     <form action="" method="post" novalidate>
                         <dl>
-                        {{ form.search_name }}<br>
+                            <dt> {{ form.search_name.label(class_="main-search-label")}} </dt> 
+                            <dd>{{ form.search_name(class_="main-search-input")}}<dd>
                         </p>
                         </dl>
                         <dl>
-                        {{ form.select_age }}<br>
+                            <dt> {{ form.select_age.label(class_="main-search-label")}} </dt> 
+                            <dd>{{ form.select_age(class_="main-search-input-multi")}}<dd>
                         </p>
                         </dl>
                         <dl>
-                        {{ form.select_type }}<br>
+                            <dt> {{ form.select_type.label(class_="main-search-label")}} </dt> 
+                            <dd>{{ form.select_type(class_="main-search-input-multi")}}<dd>
                         </p>
                         </dl>
                         <dl>
-                        {{ form.neighborhoods }}<br>
+                            <dt> {{ form.neighborhoods.label(class_="main-search-label")}} </dt> 
+                            <dd>{{ form.neighborhoods(class_="main-search-input-multi")}}<dd>
                         </p>
                         <dl>
-                        {{ form.zipcodes }}<br>
+                            <dt> {{ form.zipcodes.label(class_="main-search-label")}} </dt> 
+                            <dd>{{ form.zipcodes(class_="main-search-input-multi")}}<dd>
                         </p>
-                        <p> open for public school enrollment? </p>
+                        <!-- <dl>
+                            <dt> {{ form.open_for_public_school_enrollment.label(class_="main-search-label")}} </dt> 
+                            <dd>{{ form.open_for_public_school_enrollment(class_="main-search-input-multi")}}<dd>
+                        </p>
                         </dl>
-                        <p>{{ form.open_for_public_school_enrollment }} </p>
-
-                        <p> {{ form.submit }} </p>
+ -->
+                        <div class="align-items-center home-submit">
+                            <label class="search-submit-button-all">{{ form.submit(class_="search-submit-buttom") }} <i class="fas fa-search search-icon"></i></label>
+                        </div>
                     </form>
 
                 </div>
@@ -45,14 +54,12 @@
 
                 <div class="seach-results-col">
                     {% for program in programs %}
-                    <div class="program">
-                    	<h1> {{ program.name }} </h1> 
-                    	<h3> {{ program.descripiton }} </h3>
-                    	<h3> {{ program.phone }} </h3>
-                        <h3> {{ program.last_updated }} </h3>
-
-                        <h2> Presenting Organization </h2>
-                            <h3> {{ program.organizations.name }} </h3>
+                    <div class="program-card">
+                    	<h1 class="search-card-title"> {{ program.name }} </h1> 
+                    	<h3 class="search-card-sub-2"> <a href="{{ program.website }}" style="color:#19afab">{{ program.website }}</a> </h3>
+                        <h3 class="search-card-sub-2"> {{ program.descripiton }} </h3>    
+                        <h2 class="search-card-sub-1"> Presenting Organization: {{ program.organizations.name }}</h2>       
+                        <h3 class="search-card-updated"> Last Updated: {{ program.last_updated }}</h3>
                     </div>
                     {% endfor %}
                 </div>
