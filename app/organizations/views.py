@@ -1,7 +1,8 @@
-from flask import render_template, Blueprint, request, redirect
+from flask import app, render_template, Blueprint, request, redirect, jsonify
 from app.models import Organization, Program, AgeGroups, ProgramType, program_ages, program_types, neighborhood_programs, Neighborhoods, Regions
 from .forms import organizationFilterForm
 from twilio.rest import Client
+import click
 
 organizations_blueprint = Blueprint('organizations', __name__, template_folder='templates')
 
@@ -13,9 +14,9 @@ def organizations():
 		return org_search(form)
 
 	else:
-		organizations = Organization.query.all()
+		all_organizations = Organization.query.all()
 
-		return render_template('organizations.html', organizations=organizations, form=form)
+		return render_template('organizations.html', organizations=all_organizations, form=form)
 
 
 @organizations_blueprint.route('/org_search')
@@ -27,6 +28,16 @@ def org_search(search):
 	form = organizationFilterForm(request.form)
 
 	return render_template('organizations.html', organizations=organizations, form=form)
+
+@organizations_blueprint.route('/organization_data', methods=['GET', 'POST'])
+def organization_data():
+	org_ids = request.args.getlist('ids[]')
+	
+	organizations = Organization.query.filter(Organization.id.in_(org_ids)).all()
+
+	organizations = jsonify([organization.to_dict() for organization in organizations])
+
+	return organizations
 
 def identify_filters(search):
 	search_name = search.data['search_name']
