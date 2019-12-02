@@ -20,3 +20,4 @@ function openSearch(evt, searchType) {
   document.getElementById(searchType).style.display = "block";
   evt.currentTarget.className += " active active-search-color";
 }
+

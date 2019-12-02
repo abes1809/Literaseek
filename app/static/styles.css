@@ -1,9 +1,9 @@
 body {
-background-image: url(/styles/background-1.jpg);
+	background-image: url(/styles/background-1.jpg);
 }
 
 #program_map { 
-	height: 600px; 
+	height: 100%; 
 }
 
 #organization_map { 
@@ -245,26 +245,80 @@ background-image: url(/styles/background-1.jpg);
 
 /** programs/organizations index page **/
 
-@media (min-width: 1200px) {
-	.map-main-container {
-	    max-width: 85%;
-	}
-}
-
 .map-container {
-	height: 650px;
-	width: 800px;
 	position: fixed;
-	margin-top: 100px;
+	height: 100%;
+    width: 100%;
+    padding: 0px;
+    border-width: 0px;
 }
 
 .map-right {
 	/*position: fixed;*/
     top: 0;
     bottom: 0;
+    padding-left: 0px;
 }
 
-/*.map-left {
-	overflow: auto;
+.map-left {
 	height: auto;
-}*/
+	padding-right: 0px;
+}
+
+.full-search-container {
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active .collapsible:hover {
+  background-color: #ccc;
+}
+
+.filter-content {
+  padding: 20px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+.search-page-title {
+	padding: 15px 0px;
+	margin-top: 15px;
+	font-weight: bold;
+	font-size: 42px;
+	color: white;
+}
+
+.seach-results-col {
+	padding: 30px 20px;
+}
+
+.filter-open-button {
+	border-radius: 10px 10px;
+	border: .5px solid black;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.plus-icon {
+	float: right; 
+	font-size: 31px;
+	color: #19afab;;
+}
+
+.top-search-bar{
+	padding: 25px 20px;
+	background-color: #808080;
+}
