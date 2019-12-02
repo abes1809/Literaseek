@@ -37,8 +37,17 @@ class organizationFilterForm(Form):
 		('Far Southwest Side', 'Avalon Park'),
 	]
 
+	zipcodes = [
+		('60605', '60605'),
+		('60610', '60610'),
+		('60622', '60622'),
+		('60632', '60632'),
+		('60645', '60645')
+	]
+
 	neighborhoods = SelectMultipleField('Filter by neighborhoods:', choices=neighborhoods)
 	select_age = SelectMultipleField('Filter by program age group:', choices=age_choices)
 	select_type = SelectMultipleField('Filter by program type:', choices=type_choices)
 	search_name = StringField('Search By Name', validators=[DataRequired()])
+	zipcodes = SelectMultipleField('Filter by zipcodes:', choices=zipcodes)
 	submit = SubmitField('Filter')
