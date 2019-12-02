@@ -11,12 +11,9 @@ home_blueprint = Blueprint('home', __name__, template_folder='templates')
 @home_blueprint.route('/', methods=['GET', 'POST'])
 @home_blueprint.route('/home', methods=['GET', 'POST'])
 def home():
-	print("HERE2")
-	print(request.method)
 	form = homeFilterForm(request.form)
 
 	if request.method == "POST":
-		print("HERE1")
 		return home_search(form)
 
 	else:
