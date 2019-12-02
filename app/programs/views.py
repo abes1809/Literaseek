@@ -23,13 +23,22 @@ def programs():
 
 @programs_blueprint.route('/program_search', methods=['GET', 'POST'])
 def program_search(search):
-	print('HEREERE')
-
 	conditions = identify_filters(search)
 
 	all_programs = Program.query.join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).filter(*conditions).all()
 
 	form = programFilterForm(request.form)
+	return render_template('programs.html', programs=all_programs, form=form)
+
+
+@programs_blueprint.route('/program_search_home', methods=['GET', 'POST'])
+def program_search_home(zip_filter, neighborhood_filter, program_type):
+	conditions = identify_filters_home(zip_filter, neighborhood_filter, program_type)
+
+	all_programs = Program.query.join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).filter(*conditions).all()
+
+	form = programFilterForm(request.form)
+
 	return render_template('programs.html', programs=all_programs, form=form)
 
 @programs_blueprint.route('/program_view/<program_id>', methods=['GET', 'POST'])
@@ -142,3 +151,19 @@ def identify_filters(search):
 		conditions.append(ZipCodes.name.in_(search_zips))
 
 	return conditions
+
+def identify_filters_home(search_zips, search_neighborhoods, type_select):
+
+	conditions = []
+
+	if type_select:
+		conditions.append(ProgramType.name.like(type_select))
+
+	if search_neighborhoods:
+		conditions.append(Neighborhoods.name.like('%'+search_neighborhoods+'%'))
+
+	if search_zips:
+		conditions.append(ZipCodes.name.like('%'+search_zips+'%'))
+
+	return conditions
+

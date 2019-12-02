@@ -23,7 +23,17 @@ def organizations():
 def org_search(search):
 	conditions = identify_filters(search)
 
-	organizations = Organization.query.join(Program).join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).filter(*conditions).all()
+	organizations = Organization.query.join(Program).join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).filter(*conditions).all()
+
+	form = organizationFilterForm(request.form)
+
+	return render_template('organizations.html', organizations=organizations, form=form)
+
+@organizations_blueprint.route('/organization_search_home', methods=['GET', 'POST'])
+def organization_search_home(zip_filter, neighborhood_filter, program_type):
+	conditions = identify_filters_home(zip_filter, neighborhood_filter, program_type)
+
+	organizations = Organization.query.join(Program).join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).filter(*conditions).all()
 
 	form = organizationFilterForm(request.form)
 
@@ -44,6 +54,7 @@ def identify_filters(search):
 	age_groups_select = search.data['select_age']
 	type_select = search.data['select_type']
 	search_neighborhoods =  search.data["neighborhoods"]
+	search_zips =  search.data["zipcodes"]
 
 	conditions = []
 
@@ -58,5 +69,23 @@ def identify_filters(search):
 
 	if search_neighborhoods:
 		conditions.append(Regions.name.in_(search_neighborhoods))
+
+	if search_zips:
+		conditions.append(ZipCodes.name.in_(search_zips))
+
+	return conditions
+
+def identify_filters_home(search_zips, search_neighborhoods, type_select):
+
+	conditions = []
+
+	if type_select:
+		conditions.append(ProgramType.name.like(type_select))
+
+	if search_neighborhoods:
+		conditions.append(Neighborhoods.name.like('%'+search_neighborhoods+'%'))
+
+	if search_zips:
+		conditions.append(ZipCodes.name.like('%'+search_zips+'%'))
 
 	return conditions
