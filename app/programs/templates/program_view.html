@@ -1,59 +1,139 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="program_view">
-		{% for program in programs %}
-			<h1> {{ program.name }} </h1> 
-			<h3> {{ program.description }} </h3>
-		    <h3> {{ program.volunteers_needed }} </h3>
-			<h3> {{ program.website }} </h3>
-			<h3> {{ program.phone }} </h3>
-		    <h3> {{ program.last_updated }} </h3>
+<body>
+    <div class="container single-view-container">
+        <div class="program_view">
+    		{% for program in programs %}
+            <div class="program-view-title">
+    			<h1 class="program-title"> {{ program.name }} </h1> 
+            </div>
 
-        <h2> Presenting Organization </h2>
-            <h3> {{ program.organizations.name }} </h3>
-            <h3> {{ program.organizations.address }} </h3>
+            <div class="last-updated-main">
+                <p class="search-card-updated-main"> Posting Last Updated: {{ program.last_updated }} </p>
+            </div>
 
-        <h2> City Region Offered </h2>
-            {% for region in program.regions %}
-                <h3> {{region.name }} </h3>
-            {% endfor %}
-        <h2> Other information </h2>
-            {% for type in program.program_type %}
-                <h3> Type: </h3>
-                <h3>{{type.name}}</h3>
-            {% endfor %}
+            <div class="program-main-content">
 
-            <h3>Open Pub Enrollment?</h3>
-            <h3>{{program.open_public_school_enrollement}}</h3>
+                <div class="program-description-main">
+                  <h2 class="program-main-subheader"> Program Overview </h2>
+    		      <h3> {{ program.description }} </h3>
+                </div>
 
-            {% for age in program.age_groups %}
-                <h3> Ages: </h3>
-                <h3>{{age.name}}</h3>
-            {% endfor %}
+                <div class="contact-info row">
+                    <div class="col-6">
+                        <h3 class="program-phone"> <i class="fas fa-phone teal" style="margin-right:6px"></i> {{ program.organizations.phone }} </h3>
+                    </div>
+                    <div class="col-6">
+                        <h3 class="program-website"> <i class="fas fa-tv teal" style="margin-right:6px"></i> <a href="{{ program.website }}" style="color:black">{{ program.website }}</a> </h3>
+                    </div>
+                </div>
 
-    <form action="" method="post" novalidate>
-    	<p>Input Phone Number:</p>
-        <p>
-            {{ form.user_number }}
-        </p>
-        <p>Input Email Address:</p>
-        <p>
-            {{ form.user_email }}
-        </p>
-        <p>
-            {{ form.submit2 }}
-        </p>
-    </form>
+                {% set Google_URL = "https://maps.google.com/?daddr=" + program.organizations.address + "," + program.organizations.city + "," + program.organizations.state + "," + program.organizations.zipcode%}
 
-    {% set Google_URL = "https://maps.google.com/?daddr=" + program.organizations.address + "," + program.organizations.city + "," + program.organizations.state + "," + program.organizations.zipcode%}}
+                <div class="buttons-row row">
+                    <div class="col-4">
+                        <button id="textBtn" class="program-detail-button"><i class="fas fa-mobile-alt" style="color:white; margin-right:5px; font-size: 25px;"></i> Text Myself Program Information</button>
+                    </div>
+                    <div class="col-4">
+                        <button id="emailBtn" class="program-detail-button"><i class="fas fa-envelope-open-text" style="color:white; margin-right:5px; font-size: 25px;"></i>Email Myself Program Information</button>
+                    </div>
+                    <div class="col-4">
+                        <a href="{{Google_URL}}" target="_blank"><button class="program-detail-button"><i class="fas fa-map-signs" style="color:white; margin-right:5px; font-size: 25px;"></i>Get Directions</button> </a>
+                    </div> 
+                </div>
 
-    <p> <a href="{{Google_URL}}" target="_blank">Get Directions!</a></p>
+                <!-- /** MODAL **/ -->
+                <div id="textModal" class="modal">
 
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span class="close1 close">&times;</span>
+                    <form action="" method="post" novalidate class="program-send-info-form">
+                        <p class="modal-title">Your Phone Number:</p>
+                        <p class="modal-input">
+                            {{ form.user_number }}
+                        </p>
+                        <p>
+                            {{ form.submit2(class_="modal-submit-btn") }}
+                        </p>
+                    </form>
+                  </div>
+
+                </div>
+
+                <!-- /** EMAIL MODAL **/ -->
+                <div id="emailModal" class="modal">
+
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span class="close2 close">&times;</span>
+                    <form action="" method="post" novalidate class="program-send-info-form">
+                        <p class="modal-title">Your Email Address:</p>
+                        <p class="modal-input">
+                            {{ form.user_email }}
+                        </p>
+                        <p>
+                            {{ form.submit2(class_="modal-submit-btn") }}
+                        </p>
+                    </form>
+                  </div>
+
+                </div>
+
+                <h2 class="program-main-subheader"> Other Program Information </h2>
+                <div class="row">
+                    <div class="col-6">
+                        <h2 class="program-main-subheader-2"> Chicago City Region Offered </h2>
+                        {% for region in program.regions %}
+                            <li class="city-region program-text"> {{region.name }} </li>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-6">
+                        <div class="column-stacked">
+                            <h2 class="program-main-subheader-2"> Program Type(s)</h2>
+                            {% for type in program.program_type %}
+                                <li class="program-text">{{type.name}}</li>
+                            {% endfor %}
+                        </div>
+
+                        <div class="column-stacked">
+                            <h2 class="program-main-subheader-2"> Program Ages Served</h2>
+                            {% for age in program.age_groups %}
+                                <li class="program-text">{{age.name}}</li>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                {% if program.volunteers_needed == True %}
+                <div class="vols-needed-main">
+    		      <h3 class="vol-content"> This program is looking for volunteers! </h3>
+                </div>
+                {% elif program.volunteers_needed == False %}
+    			<div class="vols-needed-main">
+                  <h3 class="vol-content"> This program not currently looking for volunteers. </h3>
+                </div>
+                {% endif %}
+
+                <h2 class="program-main-subheader"> Organization Running this Program </h2>
+
+                {% set full_address = program.organizations.address + ", " + program.organizations.city + ", " + program.organizations.state + ", " + program.organizations.zipcode%}
+
+                <div class="presenting-org-main">
+                    <h3 class="program-main-subheader-2"> {{ program.organizations.name }} </h3>
+                    <h3 class="program-text"> <i class="fas fa-map-marked-alt" style="font-size:40px; margin-right:6px; color:#027192;"></i> {{ full_address }} </h3>
+                </div>
+
+            </div>
+
+      </div>
   </div>
+</body>
 
 {% endfor %}
 
-    <script type="text/javascript" src="{{ url_for('static', filename = 'map.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'main.js') }}"></script>
 
 {% endblock %}
