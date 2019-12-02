@@ -35,8 +35,8 @@
     {% for program in programs %}
     <div class="program">
     	<h1> Programs </h1> 
-    	<h2> {{ program.name }} </h2>
-    	<h3> {{ program.descripiton }} </h3>
+    	<h2> <a href="{{ url_for('programs.program_view', program_id= program.id) }}"> {{ program.name }} </a></h2>
+        <h3> {{ program.description }} </h3>
         <h3> {{ program.volunteers_needed }} </h3>
     	<h3> {{ program.website }} </h3>
     	<h3> {{ program.phone }} </h3>
