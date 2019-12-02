@@ -1,7 +1,23 @@
 $(function(){
 
+	/** additional page js **/
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+	  coll[i].addEventListener("click", function() {
+	    this.classList.toggle("active");
+	    var content = this.nextElementSibling;
+	    if (content.style.display === "block") {
+	      content.style.display = "none";
+	    } else {
+	      content.style.display = "block";
+	    }
+	  });
+	}
+
 	/** base map */
-	var map = L.map('program_map').setView([41.881832, -87.623177], 13);
+	var map = L.map('program_map').setView([41.881832, -87.623177], 12);
 
     var Stamen_Terrain = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}', {
 	   attribution: 'Stamen',
@@ -48,31 +64,31 @@ $(function(){
 
 	    function get_highlight_color(region_id){
 	    	if (region_id == 1) { 
-				var fillColor = '#fc9272'
+				var fillColor = '#D60F12'
 			} 
 			else if (region_id == 2) { 
-				var fillColor = '#9ecae1'
+				var fillColor = '#28A5E7'
 			}
 			else if (region_id == 3) { 
-				var fillColor = '#a1d99b'
+				var fillColor = '#43DE33'
 			}
 			else if (region_id == 4) { 
-				var fillColor = '#edf8b1'
+				var fillColor = '#D7F91E'
 			}
 			else if (region_id == 5) { 
-				var fillColor = '#bdbdbd'
+				var fillColor = '#606060'
 			}
 			else if (region_id == 6) { 
-				var fillColor = '#987654'
+				var fillColor = '#9C5209'
 			}
 			else if (region_id == 7) { 
-				var fillColor = '#9ebcda'
+				var fillColor = '#A10494'
 			}
 			else if (region_id == 8) { 
-				var fillColor = '#fdae6b'
+				var fillColor = '#FF8823'
 			}
 			else if (region_id == 9) { 
-				var fillColor = '#a6bddb'
+				var fillColor = '#6CEEEE'
 			}
 
 			return fillColor
@@ -134,11 +150,15 @@ $(function(){
 	        neighborhoods_layer.resetStyle(e.target);
 	    };
 
-    	$('.program').hover(
+    	$('.program-card').hover(
 			function(event) {
 
+				console.log('trigger');
+				
+
 				var elem = $(event.currentTarget);
-				elem = elem[0]["childNodes"][3]["innerText"];
+				console.log(elem);
+				elem = elem[0]["childNodes"][1]["innerText"];
 				get_program_region(elem);
 
 				function get_program_region(elem){
