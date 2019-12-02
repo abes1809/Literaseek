@@ -1,22 +1,52 @@
-document.getElementById("defaultOpen").click();
+// Get the modal
+var textModal = document.getElementById("textModal");
 
-function openSearch(evt, searchType) {
-  // Declare all variables
-  var i, tabcontent, tablinks;
+// Get the button that opens the modal
+var textBtn = document.getElementById("textBtn");
 
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close1")[0];
 
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active active-search-color", "");
-  }
-
-  // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(searchType).style.display = "block";
-  evt.currentTarget.className += " active active-search-color";
+// When the user clicks on the button, open the modal
+textBtn.onclick = function() {
+  textModal.style.display = "block";
 }
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  textModal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    textModal.style.display = "none";
+  }
+}
+
+// Get the modal
+var emailModal = document.getElementById("emailModal");
+
+// Get the button that opens the modal
+var emailBtn = document.getElementById("emailBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close2")[0];
+
+// When the user clicks on the button, open the modal
+emailBtn.onclick = function() {
+  emailModal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  emailModal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    emailModal.style.display = "none";
+  }
+}
+

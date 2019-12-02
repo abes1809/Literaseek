@@ -46,9 +46,15 @@ class programFilterForm(Form):
 	]
 
 	open_for_public_school_enrollment = BooleanField('Open for Public School Enrollment', validators=[DataRequired()])
-	select_age = SelectMultipleField('Filter by program age group:', choices=age_choices)
-	select_type = SelectMultipleField('Filter by program type:', choices=type_choices)
-	neighborhoods = SelectMultipleField('Filter by neighborhoods:', choices=neighborhoods)
-	zipcodes = SelectMultipleField('Filter by zipcodes:', choices=zipcodes)
+	select_age = SelectMultipleField('Search by program age group:', choices=age_choices)
+	select_type = SelectMultipleField('Search by program type:', choices=type_choices)
+	neighborhoods = SelectMultipleField('Search by neighborhoods:', choices=neighborhoods)
+	zipcodes = SelectMultipleField('Search by zipcodes:', choices=zipcodes)
 	search_name = StringField('Search By Name', validators=[DataRequired()])
-	submit = SubmitField('Filter')
+	submit1 = SubmitField('Search')
+
+class sendTextForm(Form):
+	user_number = StringField('Your phone number', validators=[DataRequired()])
+	user_email = StringField('Your email address', validators=[DataRequired()])
+	program_information = StringField('program_information', validators=[DataRequired()])
+	submit2 = SubmitField('Send!')

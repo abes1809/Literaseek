@@ -1,9 +1,19 @@
 body {
-background-image: url(/styles/background-1.jpg);
+	background-image: url(/styles/background-1.jpg);
+	position: relative;
+	min-height: 100vh;
+}
+
+footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1030;
 }
 
 #program_map { 
-	height: 500px; 
+	height: 100%; 
 }
 
 #organization_map { 
@@ -243,3 +253,338 @@ background-image: url(/styles/background-1.jpg);
     font-weight: bold;
 }
 
+/** programs/organizations index page **/
+
+.map-container {
+	position: fixed;
+	height: 100%;
+    width: 100%;
+    padding: 0px;
+    border-width: 0px;
+}
+
+.map-right {
+	/*position: fixed;*/
+    top: 0;
+    bottom: 0;
+    padding-left: 0px;
+}
+
+.map-left {
+	height: auto;
+	padding-right: 0px;
+}
+
+.full-search-container {
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active .collapsible:hover {
+  background-color: #ccc;
+}
+
+.filter-content {
+  padding: 20px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+  border-radius: 10px 10px;
+  border: .5px solid black;
+}
+
+.search-page-title {
+	padding: 15px 0px;
+	margin-top: 15px;
+	font-weight: bold;
+	font-size: 35px;
+	color: white;
+}
+
+.seach-results-col {
+	padding: 30px 20px;
+}
+
+.filter-open-button {
+	border-radius: 10px 10px;
+	border: .5px solid black;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.plus-icon {
+	float: right; 
+	font-size: 31px;
+	color: #19afab;;
+}
+
+.top-search-bar{
+	padding: 25px 20px;
+	background-color: #808080;
+}
+
+.main-search-label {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.main-search-input {
+	padding: 10px 50px;
+	margin-left: 10px;
+	border-radius: 10px 10px;
+	border: .5px solid black;
+}
+
+.main-search-input-multi {
+	padding: 8px 30px 20px 10px;
+	margin-left: 10px;
+	border-radius: 10px 10px;
+	border: .5px solid black;
+}
+
+.search-submit-buttom {
+	font-size: 25px;
+	font-weight: bold;
+	background-color: inherit;
+	border: inherit;
+	border-radius: inherit;
+}
+
+.search-submit-button-all{
+	display: unset;
+}
+
+dt {
+	float: left;
+}
+
+.search-card-title {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.search-card-sub-1 {
+	font-size: 22px;
+}
+
+.search-card-sub-2 {
+	font-size: 20px;
+}
+
+.search-card-updated {
+	font-size: 17px;
+	color:#A8A8A8;
+}
+
+.program-card {
+	padding: 15px 10px 15px 10px;
+	border-bottom: 1px solid #A8A8A8;
+}
+
+/** single program/org view **/
+
+@media (min-width: 1200px) {
+	.single-view-container {
+	    max-width: 1300px;
+	}
+}
+
+.single-view-container {
+	box-shadow: 0 0 18px rgba(0, 0, 0, 0.55);
+	padding: 0px;
+	border: 1px solid #4FA79F;
+	border-radius: 10px;
+}
+
+.program-title {
+	padding-top: 20px;
+	font-weight: bold;
+	font-size: 50px;
+}
+
+.program-view-title {
+	padding-top: 20px;
+	text-align: center;
+	color: white;
+	background-color: #808080;
+	width: 100%;
+	height: 13%;
+}
+
+.program-main-content {
+	padding: 10px 25px 70px 25px;
+}
+
+.last-updated-main {
+	text-align: right;
+	width: 100%;
+	top: 0;
+	padding: 10px 10px 0px 0px;
+}
+
+.search-card-updated-main {
+	font-size: 20px;
+	color:#027192;
+	margin-bottom: 5px;
+}
+
+.program-description-main {
+	width: 100%;
+	padding: 10px 0px;
+}
+
+.vols-needed-main {
+	width: 100%;
+	padding: 20px 0px;
+	border-bottom: 1px solid #A8A8A8;
+}
+
+.vol-content{
+	font-weight: bold;
+	font-size: 27px;
+	color:#ff8c3b;
+}
+
+.presenting-org-main {
+	width: 100%;
+	padding: 10px 0px;
+}
+
+.city-region{
+	font-size: 20px;
+}
+
+.contact-info {
+	padding: 25px 10px;
+}
+
+.buttons-row {
+	width: 100%;
+	padding: 25px 10px;
+	border-bottom: 1px solid #A8A8A8;
+}
+
+.program-main-subheader {
+	font-size: 37px;
+	font-weight: bold;
+	color:#027192;
+	padding: 35px 0px 15px 0px;
+}
+
+.program-main-subheader-2 {
+	font-size: 30px;
+	font-weight: bold;
+	color: #4f4f53;
+}
+
+.program-phone {
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.program-website {
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.teal{
+	color:#027192;
+	font-size: 35px;
+}
+
+.program-text {
+	font-size: 25px;
+}
+
+.column-stacked{
+	height:50%;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: #f4f5f7;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+  height: 30%;
+}
+
+.close {
+  color: #027192;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  float: right;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.program-send-info-form {
+	text-align: center;
+	margin: auto;
+}
+
+.modal-title {
+	font-size: 25px;
+    font-weight: bold;
+}
+
+.modal-input {
+	padding: 10px;
+	font-size: 25px
+}
+.modal-submit-btn {
+	font-size: 25px;
+    font-weight: bold;
+    background-color: #027192;
+    border: #027192 1px solid;
+    border-radius: 4px;
+    color: white;
+    padding: 5px 40px;
+}
+
+.program-detail-button {
+	padding: 10px;
+	margin: 10px;
+	width: 100%;
+	border: #027192 1px solid;
+    border-radius: 4px;
+    font-size: 20px;
+    background-color: #027192;
+    color: white;
+    font-weight: bold;
+}
+
+.program-detail-button:hover {
+    background-color: grey;
+}
