@@ -50,4 +50,4 @@ class organizationFilterForm(Form):
 	select_type = SelectMultipleField('Filter by program type:', choices=type_choices)
 	search_name = StringField('Search By Name', validators=[DataRequired()])
 	zipcodes = SelectMultipleField('Filter by zipcodes:', choices=zipcodes)
-	submit = SubmitField('Filter')
+	submit1 = SubmitField('Filter')

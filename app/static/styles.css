@@ -17,7 +17,7 @@ footer {
 }
 
 #organization_map { 
-	height:500px ; 
+	height: 100%; 
 }
 
 
@@ -587,4 +587,10 @@ dt {
 
 .program-detail-button:hover {
     background-color: grey;
+}
+
+/** organization map page **/
+.all_orgs{
+	width: 0%;
+	height: 0%;
 }

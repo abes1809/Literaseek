@@ -95,6 +95,7 @@ $(function(){
 		    }
 
 		    function highlightFeature(e) {
+		    	this.openPopup();
 	            var layer = e.target;
 
 	            layer.setStyle({
@@ -110,7 +111,7 @@ $(function(){
 	        };
 
 		    function resetHighlight(e) {
-		        console.log("fired");
+		        this.closePopup();
 		        neighborhoods_layer.resetStyle(e.target);
 		    };
 
@@ -150,6 +151,13 @@ $(function(){
 	    };
 
 	    function create_organization_layer(result) {
+	    	function openPopUp(e) {
+	    		this.openPopup();
+	    	}
+
+	    	function closePopUp(e) {
+	    		this.closePopup();
+	    	}
 
 	    	var geojsonMarkerOptions = {
 	    	            radius: 8,
@@ -164,6 +172,11 @@ $(function(){
 	            if (feature.properties && feature.properties.name && feature.properties.address){
 	                layer.bindPopup("Organization Name: " + feature.properties.name + "Address: " + feature.properties.address);
 	            }
+
+	            layer.on({
+                	mouseover: openPopUp,
+    	        	mouseout: closePopUp,
+	            });
 	        };
 
 	        var organizations_layer = L.geoJSON(result,
