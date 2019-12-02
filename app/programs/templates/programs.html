@@ -44,7 +44,7 @@
                         </dl>
  -->
                         <div class="align-items-center home-submit">
-                            <label class="search-submit-button-all">{{ form.submit(class_="search-submit-buttom") }} <i class="fas fa-search search-icon"></i></label>
+                            <label class="search-submit-button-all">{{ form.submit1(class_="search-submit-buttom") }} <i class="fas fa-search search-icon"></i></label>
                         </div>
                     </form>
 
@@ -55,7 +55,7 @@
                 <div class="seach-results-col">
                     {% for program in programs %}
                     <div class="program-card">
-                    	<h1 class="search-card-title"> {{ program.name }} </h1> 
+                    	<h1 class="search-card-title"> <a href="{{ url_for('programs.program_view', program_id= program.id) }}">{{ program.name }}</a></h1> 
                     	<h3 class="search-card-sub-2"> <a href="{{ program.website }}" style="color:#19afab">{{ program.website }}</a> </h3>
                         <h3 class="search-card-sub-2"> {{ program.descripiton }} </h3>    
                         <h2 class="search-card-sub-1"> Presenting Organization: {{ program.organizations.name }}</h2>       

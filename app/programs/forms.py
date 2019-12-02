@@ -51,4 +51,10 @@ class programFilterForm(Form):
 	neighborhoods = SelectMultipleField('Search by neighborhoods:', choices=neighborhoods)
 	zipcodes = SelectMultipleField('Search by zipcodes:', choices=zipcodes)
 	search_name = StringField('Search By Name', validators=[DataRequired()])
-	submit = SubmitField('Search')
+	submit1 = SubmitField('Search')
+
+class sendTextForm(Form):
+	user_number = StringField('Your phone number', validators=[DataRequired()])
+	user_email = StringField('Your email address', validators=[DataRequired()])
+	program_information = StringField('program_information', validators=[DataRequired()])
+	submit2 = SubmitField('Send!')
