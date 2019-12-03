@@ -51,7 +51,8 @@
                 <div class="seach-results-col">
                     {% for organization in organizations %}
                     <div class="program-card">
-                        <h1 class="search-card-title"> <a href="" target="_blank" style="color:black">{{ organization.name }}</a></h1> 
+                        <p class="hide"> {{ organization.id }}</p>
+                        <h1 class="search-card-title"> <a href="{{ url_for('organizations.organization_view', organization_id= organization.id) }}" target="_blank" style="color:black">{{ organization.name }}</a></h1> 
                         <h3 class="search-card-sub-2"> <a href="{{ organization.website }}" target="_blank" style="color:#19afab">{{ organization.website }} </a> </h3>
                         <h3 class="search-card-sub-2"> {{ organization.phone }}</h3>
 <!--                         <h3 class="search-card-sub-2"> {{ organization.description }} </h3>  -->         
@@ -70,7 +71,7 @@
 
     </div>
 
-    <div id="all_orgs" class="all_orgs" style="visibility: hidden">
+    <div id="all_orgs" class="all_orgs hide" style="visibility: hidden">
         {% for organization in organizations %}
             {{ organization.id }},
         {% endfor %}

@@ -122,7 +122,7 @@
                 {% set full_address = program.organizations.address + ", " + program.organizations.city + ", " + program.organizations.state + ", " + program.organizations.zipcode%}
 
                 <div class="presenting-org-main">
-                    <h3 class="program-main-subheader-2"> {{ program.organizations.name }} </h3>
+                    <h3 class="program-main-subheader-2"> <a href="{{ url_for('organizations.organization_view', organization_id= program.organizations.id) }}" target="_blank" style="color:black">{{ program.organizations.name }}</a> </h3>
                     <h3 class="program-text"> <i class="fas fa-map-marked-alt" style="font-size:40px; margin-right:6px; color:#027192;"></i> {{ full_address }} </h3>
                 </div>
 

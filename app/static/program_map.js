@@ -156,9 +156,6 @@ $(function(){
     	$('.program-card').hover(
 			function(event) {
 
-				console.log('trigger');
-				
-
 				var elem = $(event.currentTarget);
 				console.log(elem);
 				elem = elem[0]["childNodes"][1]["innerText"];

@@ -51,3 +51,9 @@ class organizationFilterForm(Form):
 	search_name = StringField('Search By Name', validators=[DataRequired()])
 	zipcodes = SelectMultipleField('Filter by zipcodes:', choices=zipcodes)
 	submit1 = SubmitField('Filter')
+
+class sendTextForm(Form):
+	user_number = StringField('Your phone number', validators=[DataRequired()])
+	user_email = StringField('Your email address', validators=[DataRequired()])
+	program_information = StringField('program_information', validators=[DataRequired()])
+	submit2 = SubmitField('Send!')

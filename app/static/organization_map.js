@@ -1,4 +1,20 @@
-$(function(){ 
+$(function(){
+
+		/** additional page js **/
+		var coll = document.getElementsByClassName("collapsible");
+		var i;
+
+		for (i = 0; i < coll.length; i++) {
+		  coll[i].addEventListener("click", function() {
+		    this.classList.toggle("active");
+		    var content = this.nextElementSibling;
+		    if (content.style.display === "block") {
+		      content.style.display = "none";
+		    } else {
+		      content.style.display = "block";
+		    }
+		  });
+		}  
 
 		/** to hold layers for controller */
 
@@ -151,6 +167,39 @@ $(function(){
 	    };
 
 	    function create_organization_layer(result) {
+
+	    	function open_on_hover(organization){	  
+	    		organizations_layer.eachLayer(function (layer) {
+	    			var popup_name = layer['feature']['properties']['name'];
+	    			var lat = layer['_latlng']['lat'];
+	    			var lng = layer['_latlng']['lng'];
+
+    				if (organization == popup_name){
+    					map.panTo([lat, lng], 15);
+    					layer.openPopup()
+	    			}
+	    		});
+	    	}
+
+    	    function close_popup_hover(){
+    	    	organizations_layer.eachLayer(function (layer) {
+    				layer.closePopup();	
+    	    	});
+    	    }
+
+	    	$('.program-card').hover(
+				function(event) {
+					var elem = $(event.currentTarget);
+					console.log(elem);
+					elem = elem[0]["childNodes"][3]["innerText"];
+					console.log(elem);
+					open_on_hover(elem);	
+				},
+				function(event){
+					close_popup_hover();
+				}
+	    	);
+
 	    	function openPopUp(e) {
 	    		this.openPopup();
 	    	}
