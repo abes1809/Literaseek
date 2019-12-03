@@ -58,7 +58,6 @@ def program_view(program_id):
 	)
 	
 	form = sendTextForm(request.form, program_information=program_information)
-	sendEmail(form)
 
 	if form.data['user_number']:
 		sendText(form)

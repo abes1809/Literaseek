@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body>
+    <div class="container single-view-container">
+        <div class="program_view">
+    		{% for organization in organizations %}
+            <div class="program-view-title">
+    			<h1 class="program-title"> {{ organization.name }} </h1> 
+            </div>
+
+            <div class="last-updated-main">
+                <p class="search-card-updated-main"> Posting Last Updated: {{ organization.last_updated }} </p>
+            </div>
+
+            <div class="program-main-content">
+
+                <div class="program-description-main">
+                  <h2 class="program-main-subheader"> Organization Overview </h2>
+    		      <h3> {{ organization.description }} </h3>
+                </div>
+
+                <div class="contact-info row">
+                    <div class="col-4">
+                        <i class="fas fa-phone teal org-icon" style="margin-bottom:18px"></i> 
+                        <h3 class="organization-website org-info"> {{ organization.phone }} </h3>
+                    </div>
+                    <div class="col-4">
+                        <i class="fas fa-tv teal org-icon" style="margin-bottom:18px"></i>
+                        <h3 class="organization-website org-info"> <a href="{{ organizations.website }}" style="color:black">{{ organization.website }}</a> </h3>
+                    </div>
+
+                    {% set full_address = organization.address + ", " + organization.city + ", " + organization.state + ", " + organization.zipcode %}
+
+                    <div class="col-4">
+                        <i class="fas fa-map-marker-alt teal org-icon" style="margin-bottom:18px"></i> 
+                        <h3 class="organization-website org-info"> {{ full_address }} </h3>
+                    </div>
+                </div>
+
+                {% set Google_URL = "https://maps.google.com/?daddr=" + organization.address + "," + organization.city + "," + organization.state + "," + organization.zipcode%}
+
+                <div class="buttons-row row">
+                    <div class="col-4">
+                        <button id="textBtn" class="program-detail-button"><i class="fas fa-mobile-alt" style="color:white; margin-right:5px; font-size: 25px;"></i>Email Myself this Information</button>
+                    </div>
+                    <div class="col-4">
+                        <button id="emailBtn" class="program-detail-button"><i class="fas fa-envelope-open-text" style="color:white; margin-right:5px; font-size: 25px;"></i>Email Myself this Information</button>
+                    </div>
+                    <div class="col-4">
+                        <a href="{{Google_URL}}" target="_blank"><button class="program-detail-button"><i class="fas fa-map-signs" style="color:white; margin-right:5px; font-size: 25px;"></i>Get Directions</button> </a>
+                    </div> 
+                </div>
+
+                <!-- /** MODAL **/ -->
+                <div id="textModal" class="modal">
+
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span class="close1 close">&times;</span>
+                    <form action="" method="post" novalidate class="program-send-info-form">
+                        <p class="modal-title">Your Phone Number:</p>
+                        <p class="modal-input">
+                            {{ form.user_number }}
+                        </p>
+                        <p>
+                            {{ form.submit2(class_="modal-submit-btn") }}
+                        </p>
+                    </form>
+                  </div>
+
+                </div>
+
+                <!-- /** EMAIL MODAL **/ -->
+                <div id="emailModal" class="modal">
+
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span class="close2 close">&times;</span>
+                    <form action="" method="post" novalidate class="program-send-info-form">
+                        <p class="modal-title">Your Email Address:</p>
+                        <p class="modal-input">
+                            {{ form.user_email }}
+                        </p>
+                        <p>
+                            {{ form.submit2(class_="modal-submit-btn") }}
+                        </p>
+                    </form>
+                  </div>
+
+                </div>
+
+                <h2 class="program-main-subheader"> Programs Ran by {{ organization.name }} </h2>
+
+                <div class="presenting-org-main">
+                    {% for program in organization.programs %}
+                    <h3 class="program-main-subheader-2" style="margin-top: 10px"> <a href="{{ url_for('programs.program_view', program_id= program.id) }}" target="_blank" style="color:black">{{ program.name }}</a> </h3>
+
+                    <div class="row org-program-row">
+                        <div class="col-6">
+                            <h2 class="program-main-subheader-3"> Program Ages Served</h2>
+                            {% for age in program.age_groups %}
+                                <li class="org-text">{{age.name}}</li>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-6">
+                            <h2 class="program-main-subheader-3"> Program Type(s)</h2>
+                            {% for type in program.program_type %}
+                                <li class="org-text">{{type.name}}</li>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                </div>
+
+
+            </div>
+
+      </div>
+  </div>
+</body>
+
+{% endfor %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename = 'main.js') }}"></script>
+
+{% endblock %}
