@@ -20,7 +20,7 @@ $(function(){
 	var map = L.map('program_map').setView([41.8786, -87.6251], 12);
 
     var Stamen_Terrain = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}', {
-	   attribution: 'Stamen',
+	   attribution: 'Map tiles by ' + '<a href="http://stamen.com">Stamen Design</a>',
 	   minZoom: 0,
 	   maxZoom: 20,
 	   ext: 'jpg'
@@ -211,5 +211,58 @@ $(function(){
     };
 
     get_neighborhood_data();
+
+    /** create legend */
+
+    function getColor(region) {
+    	console.log('fire');
+		if (region == "Central") { 
+			var color = 'red'
+		} 
+		else if (region == "Far North Side") { 
+			var color = 'blue'
+		}
+		else if (region == "Far Southeast Side") { 
+			var color = 'green'
+		}
+		else if (region == "Far Southwest Side") { 
+			var color = 'yellow'
+		}
+		else if (region == "North Side") { 
+			var color = 'grey'
+		}
+		else if (region == "Northwest Side") { 
+			var color = 'brown'
+		}
+		else if (region == "South Side") { 
+			var color = 'purple'
+		}
+		else if (region == "Southwest Side") { 
+			var color = 'orange'
+		}
+		else if (region == "West Side") { 
+			var color = 'teal'
+		}
+
+		return color
+    }
+
+    var legend = L.control({position: 'bottomright'});
+
+    legend.onAdd = function (map) {
+
+        var div = L.DomUtil.create('div', 'info legend'),
+            grades = ["Central", "Far North Side", "Far Southeast Side", "Far Southwest Side", "North Side", "Northwest Side", "South Side", "Southwest Side", "West Side"],
+            labels = [];
+
+        for (var i = 0; i < grades.length; i++) {
+            div.innerHTML +=
+            '<i style="background:' + getColor(grades[i]) + '"></i> ' + grades[i] + '<br>';
+        }
+
+        return div;
+    };
+
+    legend.addTo(map);
 
 });
