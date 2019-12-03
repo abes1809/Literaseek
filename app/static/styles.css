@@ -62,14 +62,25 @@ footer {
 	background-color: #68b649;
 }
 
+.nav-1:hover {
+	background-color: #518f39;
+}
+
 .nav-2 {
 	background-color: #19afab;
+}
+
+.nav-2:hover {
+	background-color: #148784;
 }
 
 .nav-3 {
 	background-color: #ee9111;
 }
 
+.nav-3:hover {
+	background-color: #d6820f;
+}
 /** home search box **/
 
 .title {
