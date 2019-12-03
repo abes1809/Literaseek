@@ -32,7 +32,7 @@ $(function(){
 
 	function get_neighborhood_data(){
     	$.ajax({
-            url: 'http://localhost:5000/neighborhoods',
+            url: '/neighborhoods',
             success: create_neighborhood_layer,
             error: function(error){
             	console.log(error)
@@ -163,7 +163,7 @@ $(function(){
 
 				function get_program_region(elem){
 			    	return $.ajax({
-			            url: 'http://localhost:5000/program_regions/' + elem,
+			            url: '/program_regions/' + elem,
 			            success: function(data){
 			            	var program_regions = data[0]['regions'];
 			            	create_highlights(program_regions);

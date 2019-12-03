@@ -42,7 +42,7 @@ $(function(){
 
 		function get_neighborhood_data(){
 	    	$.ajax({
-	            url: 'http://localhost:5000/neighborhoods',
+	            url: '/neighborhoods',
 	            success: create_neighborhood_layer,
 	            error: function(error){
 	            	console.log(error)
