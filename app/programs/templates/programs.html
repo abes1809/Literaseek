@@ -1,80 +1,77 @@
 {% extends "base.html" %}
 
 {% block content %}
-<body style="overflow-x: hidden;">
-    <div class="row">
-        <div class="col-4 map-left">
-            <div class="container full-search-container">
+<div class="row">
+    <div class="col-4 map-left">
+        <div class="container full-search-container">
 
-            <div class="top-search-bar">
-                <h1 class="search-page-title">Programs Search Results</h1>
+        <div class="top-search-bar">
+            <h1 class="search-page-title">Programs Search Results</h1>
 
-                <button type="button" class="collapsible filter-open-button">Change Search <i class="fas fa-plus-square plus-icon"></i></button>
+            <button type="button" class="collapsible filter-open-button">Change Search <i class="fas fa-plus-square plus-icon"></i></button>
 
-                <div class="filter-content">
+            <div class="filter-content">
 
-                    <form action="" method="post" novalidate>
-                        <dl>
-                            <dt> {{ form.search_name.label(class_="main-search-label")}} </dt> 
-                            <dd>{{ form.search_name(class_="main-search-input")}}<dd>
-                        </p>
-                        </dl>
-                        <dl>
-                            <dt> {{ form.select_age.label(class_="main-search-label")}} </dt> 
-                            <dd>{{ form.select_age(class_="main-search-input-multi")}}<dd>
-                        </p>
-                        </dl>
-                        <dl>
-                            <dt> {{ form.select_type.label(class_="main-search-label")}} </dt> 
-                            <dd>{{ form.select_type(class_="main-search-input-multi")}}<dd>
-                        </p>
-                        </dl>
-                        <dl>
-                            <dt> {{ form.neighborhoods.label(class_="main-search-label")}} </dt> 
-                            <dd>{{ form.neighborhoods(class_="main-search-input-multi")}}<dd>
-                        </p>
-                        <dl>
-                            <dt> {{ form.zipcodes.label(class_="main-search-label")}} </dt> 
-                            <dd>{{ form.zipcodes(class_="main-search-input-multi")}}<dd>
-                        </p>
-                        <!-- <dl>
-                            <dt> {{ form.open_for_public_school_enrollment.label(class_="main-search-label")}} </dt> 
-                            <dd>{{ form.open_for_public_school_enrollment(class_="main-search-input-multi")}}<dd>
-                        </p>
-                        </dl>
- -->
-                        <div class="align-items-center home-submit">
-                            <label class="search-submit-button-all">{{ form.submit1(class_="search-submit-buttom") }} <i class="fas fa-search search-icon"></i></label>
-                        </div>
-                    </form>
-
-                </div>
-
-            </div>
-
-                <div class="seach-results-col">
-                    {% for program in programs %}
-                    <div class="program-card">
-                    	<h1 class="search-card-title"> <a href="{{ url_for('programs.program_view', program_id= program.id) }}" target="_blank" style="color:black">{{ program.name }}</a></h1> 
-                    	<h3 class="search-card-sub-2"> <a href="{{ program.website }}" target="_blank" style="color:#19afab">{{ program.website }} </a> </h3>
-                        <h3 class="search-card-sub-2"> {{ program.descripiton }} </h3>    
-                        <h2 class="search-card-sub-1"> Presenting Organization: {{ program.organizations.name }}</h2>       
-                        <h3 class="search-card-updated"> Last Updated: {{ program.last_updated }}</h3>
+                <form action="" method="post" novalidate>
+                    <dl>
+                        <dt> {{ form.search_name.label(class_="main-search-label")}} </dt> 
+                        <dd>{{ form.search_name(class_="main-search-input")}}<dd>
+                    </p>
+                    </dl>
+                    <dl>
+                        <dt> {{ form.select_age.label(class_="main-search-label")}} </dt> 
+                        <dd>{{ form.select_age(class_="main-search-input-multi")}}<dd>
+                    </p>
+                    </dl>
+                    <dl>
+                        <dt> {{ form.select_type.label(class_="main-search-label")}} </dt> 
+                        <dd>{{ form.select_type(class_="main-search-input-multi")}}<dd>
+                    </p>
+                    </dl>
+                    <dl>
+                        <dt> {{ form.neighborhoods.label(class_="main-search-label")}} </dt> 
+                        <dd>{{ form.neighborhoods(class_="main-search-input-multi")}}<dd>
+                    </p>
+                    <dl>
+                        <dt> {{ form.zipcodes.label(class_="main-search-label")}} </dt> 
+                        <dd>{{ form.zipcodes(class_="main-search-input-multi")}}<dd>
+                    </p>
+                    <!-- <dl>
+                        <dt> {{ form.open_for_public_school_enrollment.label(class_="main-search-label")}} </dt> 
+                        <dd>{{ form.open_for_public_school_enrollment(class_="main-search-input-multi")}}<dd>
+                    </p>
+                    </dl>
+-->
+                    <div class="align-items-center home-submit">
+                        <label class="search-submit-button-all">{{ form.submit1(class_="search-submit-buttom") }} <i class="fas fa-search search-icon"></i></label>
                     </div>
-                    {% endfor %}
+                </form>
+
+            </div>
+
+        </div>
+
+            <div class="seach-results-col">
+                {% for program in programs %}
+                <div class="program-card">
+                	<h1 class="search-card-title"> <a href="{{ url_for('programs.program_view', program_id= program.id) }}" target="_blank" style="color:black">{{ program.name }}</a></h1> 
+                	<h3 class="search-card-sub-2"> <a href="{{ program.website }}" target="_blank" style="color:#19afab">{{ program.website }} </a> </h3>
+                    <h3 class="search-card-sub-2"> {{ program.descripiton }} </h3>    
+                    <h2 class="search-card-sub-1"> Presenting Organization: {{ program.organizations.name }}</h2>       
+                    <h3 class="search-card-updated"> Last Updated: {{ program.last_updated }}</h3>
                 </div>
+                {% endfor %} 
             </div>
         </div>
-
-        <div class="col-8 map-right">
-            <div class="map-container">
-                <div id="program_map"></div>
-            </div>
-        </div>
-
     </div>
 
-</body>
+    <div class="col-8 map-right">
+        <div class="map-container">
+            <div id="program_map"></div>
+        </div>
+    </div>
+
+</div>
 
     <script type="text/javascript" src="{{ url_for('static', filename = 'program_map.js') }}"></script>
 

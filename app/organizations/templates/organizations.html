@@ -2,85 +2,83 @@
 
 {% block content %}
 
-<body style="overflow-x: hidden;">
-    <div class="row">
-        <div class="col-4 map-left">
-            <div class="container full-search-container">
 
-            <div class="top-search-bar">
-                <h1 class="search-page-title">Organizations Search Results</h1>
+<div class="row">
+    <div class="col-4 map-left">
+        <div class="container full-search-container">
 
-                <button type="button" class="collapsible filter-open-button">Change Search <i class="fas fa-plus-square plus-icon"></i></button>
+        <div class="top-search-bar">
+            <h1 class="search-page-title">Organizations Search Results</h1>
 
-                <div class="filter-content">
+            <button type="button" class="collapsible filter-open-button">Change Search <i class="fas fa-plus-square plus-icon"></i></button>
 
-                    <form action="" method="post" novalidate>
-                        <dl>
-                            <dt> {{ form.search_name.label(class_="main-search-label")}} </dt> 
-                            <dd>{{ form.search_name(class_="main-search-input")}}<dd>
-                        </p>
-                        </dl>
-                        <dl>
-                            <dt> {{ form.select_age.label(class_="main-search-label")}} </dt> 
-                            <dd>{{ form.select_age(class_="main-search-input-multi")}}<dd>
-                        </p>
-                        </dl>
-                        <dl>
-                            <dt> {{ form.select_type.label(class_="main-search-label")}} </dt> 
-                            <dd>{{ form.select_type(class_="main-search-input-multi")}}<dd>
-                        </p>
-                        </dl>
-                        <dl>
-                            <dt> {{ form.neighborhoods.label(class_="main-search-label")}} </dt> 
-                            <dd>{{ form.neighborhoods(class_="main-search-input-multi")}}<dd>
-                        </p>
-                        <dl>
-                            <dt> {{ form.zipcodes.label(class_="main-search-label")}} </dt> 
-                            <dd>{{ form.zipcodes(class_="main-search-input-multi")}}<dd>
-                        </p>
-                        <div class="align-items-center home-submit">
-                            <label class="search-submit-button-all">{{ form.submit1(class_="search-submit-buttom") }} <i class="fas fa-search search-icon"></i></label>
-                        </div>
-                    </form>
+            <div class="filter-content">
 
-                </div>
-
-            </div>
-
-
-                <div class="seach-results-col">
-                    {% for organization in organizations %}
-                    <div class="program-card">
-                        <p class="hide"> {{ organization.id }}</p>
-                        <h1 class="search-card-title"> <a href="{{ url_for('organizations.organization_view', organization_id= organization.id) }}" target="_blank" style="color:black">{{ organization.name }}</a></h1> 
-                        <h3 class="search-card-sub-2"> <a href="{{ organization.website }}" target="_blank" style="color:#19afab">{{ organization.website }} </a> </h3>
-                        <h3 class="search-card-sub-2"> {{ organization.phone }}</h3>
-<!--                         <h3 class="search-card-sub-2"> {{ organization.description }} </h3>  -->         
-                        <h3 class="search-card-updated"> Last Updated: {{ organization.last_updated }}</h3>
+                <form action="" method="post" novalidate>
+                    <dl>
+                        <dt> {{ form.search_name.label(class_="main-search-label")}} </dt> 
+                        <dd>{{ form.search_name(class_="main-search-input")}}<dd>
+                    </p>
+                    </dl>
+                    <dl>
+                        <dt> {{ form.select_age.label(class_="main-search-label")}} </dt> 
+                        <dd>{{ form.select_age(class_="main-search-input-multi")}}<dd>
+                    </p>
+                    </dl>
+                    <dl>
+                        <dt> {{ form.select_type.label(class_="main-search-label")}} </dt> 
+                        <dd>{{ form.select_type(class_="main-search-input-multi")}}<dd>
+                    </p>
+                    </dl>
+                    <dl>
+                        <dt> {{ form.neighborhoods.label(class_="main-search-label")}} </dt> 
+                        <dd>{{ form.neighborhoods(class_="main-search-input-multi")}}<dd>
+                    </p>
+                    <dl>
+                        <dt> {{ form.zipcodes.label(class_="main-search-label")}} </dt> 
+                        <dd>{{ form.zipcodes(class_="main-search-input-multi")}}<dd>
+                    </p>
+                    <div class="align-items-center home-submit">
+                        <label class="search-submit-button-all">{{ form.submit1(class_="search-submit-buttom") }} <i class="fas fa-search search-icon"></i></label>
                     </div>
-                    {% endfor %}
+                </form>
+
+            </div>
+
+        </div>
+
+
+            <div class="seach-results-col">
+                {% for organization in organizations %}
+                <div class="program-card">
+                    <p class="hide"> {{ organization.id }}</p>
+                    <h1 class="search-card-title"> <a href="{{ url_for('organizations.organization_view', organization_id= organization.id) }}" target="_blank" style="color:black">{{ organization.name }}</a></h1> 
+                    <h3 class="search-card-sub-2"> <a href="{{ organization.website }}" target="_blank" style="color:#19afab">{{ organization.website }} </a> </h3>
+                    <h3 class="search-card-sub-2"> {{ organization.phone }}</h3>
+<!--                         <h3 class="search-card-sub-2"> {{ organization.description }} </h3>  -->         
+                    <h3 class="search-card-updated"> Last Updated: {{ organization.last_updated }}</h3>
                 </div>
+                {% endfor %}
             </div>
         </div>
+    </div>
 
-        <div class="col-8 map-right">
-            <div class="map-container">
-                <div id="organization_map"></div>
-            </div>
+    <div class="col-8 map-right">
+        <div class="map-container">
+            <div id="organization_map"></div>
         </div>
-
     </div>
 
-    <div id="all_orgs" class="all_orgs hide" style="visibility: hidden">
-        {% for organization in organizations %}
-            {{ organization.id }},
-        {% endfor %}
-    </div>
+</div>
+
+<div id="all_orgs" class="all_orgs hide" style="visibility: hidden">
+    {% for organization in organizations %}
+        {{ organization.id }},
+    {% endfor %}
+</div>
 
 
 
-</body>
-
-    <script type="text/javascript" src="{{ url_for('static', filename = 'organization_map.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename = 'organization_map.js') }}"></script>
 
 {% endblock %}

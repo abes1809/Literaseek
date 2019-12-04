@@ -1,136 +1,137 @@
 {% extends "base.html" %}
 
 {% block content %}
-<body>
-    <div class="container single-view-container">
-        <div class="program_view">
-    		{% for program in programs %}
-            <div class="program-view-title">
-    			<h1 class="program-title"> {{ program.name }} </h1> 
+
+<div class="container single-view-container">
+    <div class="program_view">
+		{% for program in programs %}
+        <div class="program-view-title">
+			<h1 class="program-title"> {{ program.name }} </h1> 
+        </div>
+
+        <div class="last-updated-main">
+            <p class="search-card-updated-main"> Posting Last Updated: {{ program.last_updated }} </p>
+        </div>
+
+        <div class="program-main-content">
+
+            <div class="program-description-main">
+              <h2 class="program-main-subheader"> Program Overview </h2>
+		      <h3> {{ program.description }} </h3>
             </div>
 
-            <div class="last-updated-main">
-                <p class="search-card-updated-main"> Posting Last Updated: {{ program.last_updated }} </p>
+            <div class="contact-info row">
+                <div class="col-6">
+                    <i class="fas fa-phone teal org-icon" style="margin-bottom:18px"></i>
+                    <h3 class="program-phone org-info"> {{ program.organizations.phone }} </h3>
+                </div>
+                <div class="col-6">
+                    <i class="fas fa-tv teal org-icon" style="margin-bottom:18px"></i>
+                    <h3 class="program-website org-info"> <a href="{{ program.website }}" style="color:black">{{ program.website }}</a> </h3>
+                </div>
             </div>
 
-            <div class="program-main-content">
+            {% set Google_URL = "https://maps.google.com/?daddr=" + program.organizations.address + "," + program.organizations.city + "," + program.organizations.state + "," + program.organizations.zipcode%}
 
-                <div class="program-description-main">
-                  <h2 class="program-main-subheader"> Program Overview </h2>
-    		      <h3> {{ program.description }} </h3>
+            <div class="buttons-row row">
+                <div class="col-4">
+                    <button id="textBtn" class="program-detail-button"><i class="fas fa-mobile-alt" style="color:white; margin-right:5px; font-size: 25px;"></i> Text Myself Program Information</button>
+                </div>
+                <div class="col-4">
+                    <button id="emailBtn" class="program-detail-button"><i class="fas fa-envelope-open-text" style="color:white; margin-right:5px; font-size: 25px;"></i>Email Myself Program Information</button>
+                </div>
+                <div class="col-4">
+                    <a href="{{Google_URL}}" target="_blank"><button class="program-detail-button"><i class="fas fa-map-signs" style="color:white; margin-right:5px; font-size: 25px;"></i>Get Directions</button> </a>
+                </div> 
+            </div>
+
+            <!-- /** MODAL **/ -->
+            <div id="textModal" class="modal">
+
+              <!-- Modal content -->
+              <div class="modal-content">
+                <span class="close1 close">&times;</span>
+                <form action="" method="post" novalidate class="program-send-info-form">
+                    <p class="modal-title">Your Phone Number:</p>
+                    <p class="modal-input">
+                        {{ form.user_number }}
+                    </p>
+                    <p>
+                        {{ form.submit2(class_="modal-submit-btn") }}
+                    </p>
+                </form>
+              </div>
+
+            </div>
+
+            <!-- /** EMAIL MODAL **/ -->
+            <div id="emailModal" class="modal">
+
+              <!-- Modal content -->
+              <div class="modal-content">
+                <span class="close2 close">&times;</span>
+                <form action="" method="post" novalidate class="program-send-info-form">
+                    <p class="modal-title">Your Email Address:</p>
+                    <p class="modal-input">
+                        {{ form.user_email }}
+                    </p>
+                    <p>
+                        {{ form.submit2(class_="modal-submit-btn") }}
+                    </p>
+                </form>
+              </div>
+
+            </div>
+
+            <h2 class="program-main-subheader"> Other Program Information </h2>
+            <div class="row">
+                <div class="col-6">
+                    <h2 class="program-main-subheader-2"> Chicago City Region Offered </h2>
+                    {% for region in program.regions %}
+                        <li class="city-region program-text"> {{region.name }} </li>
+                    {% endfor %}
                 </div>
 
-                <div class="contact-info row">
-                    <div class="col-6">
-                        <h3 class="program-phone"> <i class="fas fa-phone teal" style="margin-right:6px"></i> {{ program.organizations.phone }} </h3>
-                    </div>
-                    <div class="col-6">
-                        <h3 class="program-website"> <i class="fas fa-tv teal" style="margin-right:6px"></i> <a href="{{ program.website }}" style="color:black">{{ program.website }}</a> </h3>
-                    </div>
-                </div>
-
-                {% set Google_URL = "https://maps.google.com/?daddr=" + program.organizations.address + "," + program.organizations.city + "," + program.organizations.state + "," + program.organizations.zipcode%}
-
-                <div class="buttons-row row">
-                    <div class="col-4">
-                        <button id="textBtn" class="program-detail-button"><i class="fas fa-mobile-alt" style="color:white; margin-right:5px; font-size: 25px;"></i> Text Myself Program Information</button>
-                    </div>
-                    <div class="col-4">
-                        <button id="emailBtn" class="program-detail-button"><i class="fas fa-envelope-open-text" style="color:white; margin-right:5px; font-size: 25px;"></i>Email Myself Program Information</button>
-                    </div>
-                    <div class="col-4">
-                        <a href="{{Google_URL}}" target="_blank"><button class="program-detail-button"><i class="fas fa-map-signs" style="color:white; margin-right:5px; font-size: 25px;"></i>Get Directions</button> </a>
-                    </div> 
-                </div>
-
-                <!-- /** MODAL **/ -->
-                <div id="textModal" class="modal">
-
-                  <!-- Modal content -->
-                  <div class="modal-content">
-                    <span class="close1 close">&times;</span>
-                    <form action="" method="post" novalidate class="program-send-info-form">
-                        <p class="modal-title">Your Phone Number:</p>
-                        <p class="modal-input">
-                            {{ form.user_number }}
-                        </p>
-                        <p>
-                            {{ form.submit2(class_="modal-submit-btn") }}
-                        </p>
-                    </form>
-                  </div>
-
-                </div>
-
-                <!-- /** EMAIL MODAL **/ -->
-                <div id="emailModal" class="modal">
-
-                  <!-- Modal content -->
-                  <div class="modal-content">
-                    <span class="close2 close">&times;</span>
-                    <form action="" method="post" novalidate class="program-send-info-form">
-                        <p class="modal-title">Your Email Address:</p>
-                        <p class="modal-input">
-                            {{ form.user_email }}
-                        </p>
-                        <p>
-                            {{ form.submit2(class_="modal-submit-btn") }}
-                        </p>
-                    </form>
-                  </div>
-
-                </div>
-
-                <h2 class="program-main-subheader"> Other Program Information </h2>
-                <div class="row">
-                    <div class="col-6">
-                        <h2 class="program-main-subheader-2"> Chicago City Region Offered </h2>
-                        {% for region in program.regions %}
-                            <li class="city-region program-text"> {{region.name }} </li>
+                <div class="col-6">
+                    <div class="column-stacked">
+                        <h2 class="program-main-subheader-2"> Program Type(s)</h2>
+                        {% for type in program.program_type %}
+                            <li class="program-text">{{type.name}}</li>
                         {% endfor %}
                     </div>
 
-                    <div class="col-6">
-                        <div class="column-stacked">
-                            <h2 class="program-main-subheader-2"> Program Type(s)</h2>
-                            {% for type in program.program_type %}
-                                <li class="program-text">{{type.name}}</li>
-                            {% endfor %}
-                        </div>
-
-                        <div class="column-stacked">
-                            <h2 class="program-main-subheader-2"> Program Ages Served</h2>
-                            {% for age in program.age_groups %}
-                                <li class="program-text">{{age.name}}</li>
-                            {% endfor %}
-                        </div>
+                    <div class="column-stacked">
+                        <h2 class="program-main-subheader-2"> Program Ages Served</h2>
+                        {% for age in program.age_groups %}
+                            <li class="program-text">{{age.name}}</li>
+                        {% endfor %}
                     </div>
                 </div>
-
-                {% if program.volunteers_needed == True %}
-                <div class="vols-needed-main">
-    		      <h3 class="vol-content"> This program is looking for volunteers! </h3>
-                </div>
-                {% elif program.volunteers_needed == False %}
-    			<div class="vols-needed-main">
-                  <h3 class="vol-content"> This program not currently looking for volunteers. </h3>
-                </div>
-                {% endif %}
-
-                <h2 class="program-main-subheader"> Organization Running this Program </h2>
-
-                {% set full_address = program.organizations.address + ", " + program.organizations.city + ", " + program.organizations.state + ", " + program.organizations.zipcode%}
-
-                <div class="presenting-org-main">
-                    <h3 class="program-main-subheader-2"> <a href="{{ url_for('organizations.organization_view', organization_id= program.organizations.id) }}" target="_blank" style="color:black">{{ program.organizations.name }}</a> </h3>
-                    <h3 class="program-text"> <i class="fas fa-map-marked-alt" style="font-size:40px; margin-right:6px; color:#027192;"></i> {{ full_address }} </h3>
-                </div>
-
             </div>
 
-      </div>
+            {% if program.volunteers_needed == True %}
+            <div class="vols-needed-main">
+		      <h3 class="vol-content"> This program is looking for volunteers! </h3>
+            </div>
+            {% elif program.volunteers_needed == False %}
+			<div class="vols-needed-main">
+              <h3 class="vol-content"> This program not currently looking for volunteers. </h3>
+            </div>
+            {% endif %}
+
+            <h2 class="program-main-subheader"> Organization Running this Program </h2>
+
+            {% set full_address = program.organizations.address + ", " + program.organizations.city + ", " + program.organizations.state + ", " + program.organizations.zipcode%}
+
+            <div class="presenting-org-main">
+                <h3 class="program-main-subheader-2"> <a href="{{ url_for('organizations.organization_view', organization_id= program.organizations.id) }}" target="_blank" style="color:black">{{ program.organizations.name }}</a> </h3>
+                <h3 class="program-text"> <i class="fas fa-map-marked-alt" style="font-size:40px; margin-right:6px; color:#027192;"></i> {{ full_address }} </h3>
+            </div>
+
+        </div>
+
   </div>
-</body>
+</div>
 
 {% endfor %}
 

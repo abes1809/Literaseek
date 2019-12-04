@@ -2,6 +2,7 @@ body {
 	background-image: url(/styles/background-1.jpg);
 	position: relative;
 	min-height: 100vh;
+	overflow-x: hidden;
 }
 
 footer {
