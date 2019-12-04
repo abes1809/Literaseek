@@ -22,7 +22,7 @@ $(function(){
 
 		/** base map */
 
-		var map = L.map('organization_map').setView([41.881832, -87.623177], 13);
+		var map = L.map('organization_map').setView([41.839232, -87.524748], 11);
 
 		var Stamen_Terrain = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}', {
 		   attribution: 'Map tiles by ' + '<a href="http://stamen.com">Stamen Design</a>',

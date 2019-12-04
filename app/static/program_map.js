@@ -17,7 +17,7 @@ $(function(){
 	}
 
 	/** base map */
-	var map = L.map('program_map').setView([41.8786, -87.6251], 12);
+	var map = L.map('program_map').setView([41.839232, -87.524748], 11);
 
     var Stamen_Terrain = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}', {
 	   attribution: 'Map tiles by ' + '<a href="http://stamen.com">Stamen Design</a>',

@@ -50,7 +50,7 @@ class programFilterForm(Form):
 	select_type = SelectMultipleField('Search by program type:', choices=type_choices)
 	neighborhoods = SelectMultipleField('Search by neighborhoods:', choices=neighborhoods)
 	zipcodes = SelectMultipleField('Search by zipcodes:', choices=zipcodes)
-	search_name = StringField('Search By Name', validators=[DataRequired()])
+	search_name = StringField('Search by name:', validators=[DataRequired()])
 	submit1 = SubmitField('Search')
 
 class sendTextForm(Form):

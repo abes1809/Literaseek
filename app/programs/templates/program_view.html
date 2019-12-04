@@ -17,7 +17,7 @@
 
             <div class="program-description-main">
               <h2 class="program-main-subheader"> Program Overview </h2>
-		      <h3> {{ program.description }} </h3>
+		      <h3 class="description"> {{ program.description }} </h3>
             </div>
 
             <div class="contact-info row">
@@ -86,24 +86,24 @@
             <h2 class="program-main-subheader"> Other Program Information </h2>
             <div class="row">
                 <div class="col-6">
-                    <h2 class="program-main-subheader-2"> Chicago City Region Offered </h2>
+                    <h2 class="program-main-subheader-3"> Chicago City Region Offered </h2>
                     {% for region in program.regions %}
-                        <li class="city-region program-text"> {{region.name }} </li>
+                        <li class="city-region org-text"> {{region.name }} </li>
                     {% endfor %}
                 </div>
 
                 <div class="col-6">
                     <div class="column-stacked">
-                        <h2 class="program-main-subheader-2"> Program Type(s)</h2>
+                        <h2 class="program-main-subheader-3"> Program Type(s)</h2>
                         {% for type in program.program_type %}
-                            <li class="program-text">{{type.name}}</li>
+                            <li class="org-text">{{type.name}}</li>
                         {% endfor %}
                     </div>
 
-                    <div class="column-stacked">
-                        <h2 class="program-main-subheader-2"> Program Ages Served</h2>
+                    <div class="column-stacked bottom">
+                        <h2 class="program-main-subheader-3"> Program Ages Served</h2>
                         {% for age in program.age_groups %}
-                            <li class="program-text">{{age.name}}</li>
+                            <li class="org-text">{{age.name}}</li>
                         {% endfor %}
                     </div>
                 </div>
@@ -124,8 +124,8 @@
             {% set full_address = program.organizations.address + ", " + program.organizations.city + ", " + program.organizations.state + ", " + program.organizations.zipcode%}
 
             <div class="presenting-org-main">
-                <h3 class="program-main-subheader-2"> <a href="{{ url_for('organizations.organization_view', organization_id= program.organizations.id) }}" target="_blank" style="color:black">{{ program.organizations.name }}</a> </h3>
-                <h3 class="program-text"> <i class="fas fa-map-marked-alt" style="font-size:40px; margin-right:6px; color:#027192;"></i> {{ full_address }} </h3>
+                <h3 class="program-main-subheader-2"> <a href="{{ url_for('organizations.organization_view', organization_id=program.organizations.id) }}" target="_blank" style="color:#4fa79f">{{ program.organizations.name }}</a> </h3>
+                <h3 class="org-text"> <i class="fas fa-map-marked-alt" style="font-size:40px; margin-right:6px; color:#4fa79f;"></i> {{ full_address }} </h3>
             </div>
 
         </div>

@@ -48,7 +48,7 @@ class organizationFilterForm(Form):
 	neighborhoods = SelectMultipleField('Filter by neighborhoods:', choices=neighborhoods)
 	select_age = SelectMultipleField('Filter by program age group:', choices=age_choices)
 	select_type = SelectMultipleField('Filter by program type:', choices=type_choices)
-	search_name = StringField('Search By Name', validators=[DataRequired()])
+	search_name = StringField('Filter by name:', validators=[DataRequired()])
 	zipcodes = SelectMultipleField('Filter by zipcodes:', choices=zipcodes)
 	submit1 = SubmitField('Filter')
 
