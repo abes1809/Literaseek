@@ -22,7 +22,7 @@ $(function(){
 
 		/** base map */
 
-		var map = L.map('organization_map').setView([41.839232, -87.524748], 10);
+		var map = L.map('organization_map').setView([41.839232, -87.524748], 11);
 
 		var Stamen_Terrain = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}', {
 		   attribution: 'Map tiles by ' + '<a href="http://stamen.com">Stamen Design</a>',
@@ -74,37 +74,151 @@ $(function(){
 
 	    function create_neighborhood_layer(result) {
 
-		    function getColor(region_id) {
-				if (region_id == 1) { 
-					var color = 'red'
-				} 
-				else if (region_id == 2) { 
-					var color = 'blue'
-				}
-				else if (region_id == 3) { 
-					var color = 'green'
-				}
-				else if (region_id == 4) { 
-					var color = 'yellow'
-				}
-				else if (region_id == 5) { 
-					var color = 'grey'
-				}
-				else if (region_id == 6) { 
-					var color = 'brown'
-				}
-				else if (region_id == 7) { 
-					var color = 'purple'
-				}
-				else if (region_id == 8) { 
-					var color = 'orange'
-				}
-				else if (region_id == 9) { 
-					var color = 'teal'
-				}
+	    	$('.legend-color').hover(
+				function(event) {
+					var elem = $(event.currentTarget);
+					console.log(elem);
+					elem = elem[0]["style"]["background"];
+					console.log(elem);
+					create_highlight_legend(elem);
 
-				return color
-		    }
+				},
+				function(event){
+					reset_highlight_hover();
+				}
+	    	);
+
+		    function create_highlight_legend(background_color) {
+		    	    	console.log(background_color);
+		    	    	program_region = get_region_id(background_color);
+		    	    	neighborhoods_layer.eachLayer(function (layer) {
+		    	    		var layer_region_id = layer['feature']['properties']['region_id'];
+		        			if (program_region == layer_region_id){
+		        				layer.setStyle({fillColor: get_highlight_color(layer_region_id)})
+		        			}
+		    	    	});
+		    	    }
+
+    	    function reset_highlight_hover(){
+    	    	neighborhoods_layer.eachLayer(function (layer) {
+    	    		var layer_region_id = layer['feature']['properties']['region_id'];
+    				layer.setStyle({fillColor: getColor(layer_region_id)})	
+    	    	});
+    	    }
+
+    	    function get_region_id(background_color){
+    			if (background_color == 'rgb(252, 146, 114)') { 
+    				/** red **/
+    				var region = 1
+    			} 
+    			else if (background_color == 'rgb(158, 202, 225)') { 
+    				/** blue **/
+    				var region = 2
+    			}
+    			else if (background_color == 'rgb(161, 217, 155)') { 
+    				/** green **/
+    				var region = 3
+    			}
+    			else if (background_color == 'rgb(255, 237, 160)') { 
+    				/** yellow **/
+    				var region = 4
+    			}
+    			else if (background_color == 'rgb(150, 150, 150)') { 
+    				/** grey **/
+    				var region = 5
+    			}
+    			else if (background_color == 'rgb(254, 196, 79)') { 
+    				/** brown **/
+    				var region = 6
+    			}
+    			else if (background_color == 'rgb(136, 86, 167)') { 
+    				/** purple **/
+    				var region = 7
+    			}
+    			else if (background_color == 'rgb(201, 148, 199)') { 
+    				/** pink **/
+    				var region = 8
+    			}
+    			else if (background_color == 'rgb(65, 182, 196)') { 
+    				/** teal **/
+    				var region = 9
+    			}
+
+    			return region
+    	    }
+
+    	    function get_highlight_color(region_id){
+    	    	if (region_id == 1) { 
+    				var fillColor = '#de2d26'
+    			} 
+    			else if (region_id == 2) { 
+    				var fillColor = '#3182bd'
+    			}
+    			else if (region_id == 3) { 
+    				var fillColor = '#31a354'
+    			}
+    			else if (region_id == 4) { 
+    				var fillColor = '#feb24c'
+    			}
+    			else if (region_id == 5) { 
+    				var fillColor = '##bdbdbd'
+    			}
+    			else if (region_id == 6) { 
+    				var fillColor = '#d95f0e'
+    			}
+    			else if (region_id == 7) { 
+    				var fillColor = 'rgb(92, 1, 148)'
+    			}
+    			else if (region_id == 8) { 
+    				var fillColor = '#dd1c77'
+    			}
+    			else if (region_id == 9) { 
+    				var fillColor = '#056c59'
+    			}
+
+    			return fillColor
+    	    }
+
+    	    function getColor(region_id) {
+    			if (region_id == 1) { 
+    				/** red **/
+    				var color = 'rgb(252, 146, 114)'
+    			} 
+    			else if (region_id == 2) { 
+    				/** blue **/
+    				var color = 'rgb(158, 202, 225)'
+    			}
+    			else if (region_id == 3) { 
+    				/** green **/
+    				var color = 'rgb(161, 217, 155)'
+    			}
+    			else if (region_id == 4) { 
+    				/** yellow **/
+    				var color = 'rgb(255, 237, 160)'
+    			}
+    			else if (region_id == 5) { 
+    				/** grey **/
+    				var color = 'rgb(150, 150, 150)'
+    			}
+    			else if (region_id == 6) { 
+    				/** brown **/
+    				var color = 'rgb(254, 196, 79)'
+    			}
+    			else if (region_id == 7) { 
+    				/** purple **/
+    				var color = 'rgb(136, 86, 167)'
+    			}
+    			else if (region_id == 8) { 
+    				/** pink **/
+    				var color = 'rgb(201, 148, 199)'
+    			}
+    			else if (region_id == 9) { 
+    				/** teal **/
+    				var color = 'rgb(65, 182, 196)'
+    			}
+
+    			return color
+    	    }
 
 		    function zoomToFeature(e) {
 		        map.fitBounds(e.target.getBounds());
@@ -175,8 +289,8 @@ $(function(){
 	    			var lng = layer['_latlng']['lng'];
 
     				if (organization == popup_name){
-    					map.panTo([lat, lng], 15);
-    					layer.openPopup()
+    					map.flyTo([lat, lng],13, {animate: true});
+    					layer.openPopup();
 	    			}
 	    		});
 	    	}
@@ -210,7 +324,7 @@ $(function(){
 
 	    	var geojsonMarkerOptions = {
 	    	            radius: 8,
-	    	            fillColor: "grey",
+	    	            fillColor: "#174039",
 	    	            color: "#000",
 	    	            weight: 1,
 	    	            opacity: 1,
@@ -255,57 +369,69 @@ $(function(){
 	    get_organization_marker_data();
 	    get_neighborhood_data();
 
-    /** create legend */
+       /** create legend */
 
-    function getColor(region) {
-    	console.log('fire');
-		if (region == "Central") { 
-			var color = 'red'
-		} 
-		else if (region == "Far North Side") { 
-			var color = 'blue'
-		}
-		else if (region == "Far Southeast Side") { 
-			var color = 'green'
-		}
-		else if (region == "Far Southwest Side") { 
-			var color = 'yellow'
-		}
-		else if (region == "North Side") { 
-			var color = 'grey'
-		}
-		else if (region == "Northwest Side") { 
-			var color = 'brown'
-		}
-		else if (region == "South Side") { 
-			var color = 'purple'
-		}
-		else if (region == "Southwest Side") { 
-			var color = 'orange'
-		}
-		else if (region == "West Side") { 
-			var color = 'teal'
-		}
+       function getColor(region) {
 
-		return color
-    }
+   		if (region == "Far North Side") { 
+   			/** blue **/
+   			var color = '#9ecae1'
+   		} 
+   		else if (region == "North Side") {
+   			/** grey **/ 
+   			var color = '#969696'
+   		}
+   		else if (region == "Northwest Side") { 
+   			/** brown **/
+   			var color = '#fec44f'
+   		}
+   		else if (region == "Central") {
+   			/** red **/
+   			var color = '#fc9272'
+   		}
+   		else if (region == "West Side") { 
+   			/** teal **/
+   			var color = '#41b6c4'
+   		}
+   		else if (region == "South Side") { 
+   			/** purple **/
+   			var color = 'rgb(136, 86, 167)'
+   		}
+   		else if (region == "Southwest Side") {
+   			/** pink **/ 
+   			var color = '#c994c7'
+   		}
+   		else if (region == "Far Southeast Side") {
+   			/** green **/ 
+   			var color = '#a1d99b'
+   		}
+   		else if (region == "Far Southwest Side") {
+   			/** yellow **/ 
+   			var color = '#ffeda0'
+   		}
 
-    var legend = L.control({position: 'bottomright'});
+   		return color
+       }
 
-    legend.onAdd = function (map) {
+       var legend = L.control({position: 'bottomright'});
 
-        var div = L.DomUtil.create('div', 'info legend'),
-            grades = ["Central", "Far North Side", "Far Southeast Side", "Far Southwest Side", "North Side", "Northwest Side", "South Side", "Southwest Side", "West Side"],
-            labels = [];
+       legend.onAdd = function (map) {
 
-        for (var i = 0; i < grades.length; i++) {
-            div.innerHTML +=
-            '<i style="background:' + getColor(grades[i]) + '"></i> ' + grades[i] + '<br>';
-        }
+           var div = L.DomUtil.create('div', 'info legend'),
+               grades = ["Far North Side", "North Side", "Northwest Side", "Central", "West Side", "South Side", "Southwest Side", "Far Southeast Side", "Far Southwest Side"],
+               labels = ['<strong>Chicago Regions</strong>'];
 
-        return div;
-    };
+           for (var i = 0; i < grades.length; i++) {
+           	div.innerHTML += 
+           	labels.push(
+           	'<i class="legend-color" style="background:' + getColor(grades[i]) + '"></i> ' + (grades[i] ? grades[i] : '+')
+           	);
+           	div.innerHTML = labels.join('<br>');
+           }
 
-    legend.addTo(map);
+           return div;
+       };
+
+       legend.addTo(map);
 
 })

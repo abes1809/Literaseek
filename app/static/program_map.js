@@ -44,7 +44,48 @@ $(function(){
 
 	    // neighborhood layer style
 
-	    function create_highlights(program_regions){	  
+    	$('.program-card').hover(
+			function(event) {
+
+				var elem = $(event.currentTarget);
+				console.log(elem);
+				elem = elem[0]["childNodes"][1]["innerText"];
+				get_program_region(elem);
+
+				function get_program_region(elem){
+			    	return $.ajax({
+			            url: '/program_regions/' + elem,
+			            success: function(data){
+			            	var program_regions = data[0]['regions'];
+			            	create_highlight_id(program_regions);
+			            },
+			            error: function(error){
+			            	console.log(error)
+			            }
+			        });
+			    };
+
+			},
+			function(event){
+				reset_highlight_hover();
+			}
+    	);
+
+    	$('.legend-color').hover(
+			function(event) {
+				var elem = $(event.currentTarget);
+				console.log(elem);
+				elem = elem[0]["style"]["background"];
+				console.log(elem);
+				create_highlight_legend(elem);
+
+			},
+			function(event){
+				reset_highlight_hover();
+			}
+    	);
+
+	    function create_highlight_id(program_regions) {
 	    	neighborhoods_layer.eachLayer(function (layer) {
 	    		var layer_region_id = layer['feature']['properties']['region_id'];
 	    		for (let i in program_regions) {
@@ -55,40 +96,92 @@ $(function(){
 	    	});
 	    }
 
-	    function reset_highlight(){
+	    function create_highlight_legend(background_color) {
+	    	console.log(background_color);
+	    	program_region = get_region_id(background_color);
+	    	neighborhoods_layer.eachLayer(function (layer) {
+	    		var layer_region_id = layer['feature']['properties']['region_id'];
+    			if (program_region == layer_region_id){
+    				layer.setStyle({fillColor: get_highlight_color(layer_region_id)})
+    			}
+	    	});
+	    }
+
+	    function reset_highlight_hover(){
 	    	neighborhoods_layer.eachLayer(function (layer) {
 	    		var layer_region_id = layer['feature']['properties']['region_id'];
 				layer.setStyle({fillColor: getColor(layer_region_id)})	
 	    	});
 	    }
 
+	    function get_region_id(background_color){
+			if (background_color == 'rgb(252, 146, 114)') { 
+				/** red **/
+				var region = 1
+			} 
+			else if (background_color == 'rgb(158, 202, 225)') { 
+				/** blue **/
+				var region = 2
+			}
+			else if (background_color == 'rgb(161, 217, 155)') { 
+				/** green **/
+				var region = 3
+			}
+			else if (background_color == 'rgb(255, 237, 160)') { 
+				/** yellow **/
+				var region = 4
+			}
+			else if (background_color == 'rgb(150, 150, 150)') { 
+				/** grey **/
+				var region = 5
+			}
+			else if (background_color == 'rgb(254, 196, 79)') { 
+				/** brown **/
+				var region = 6
+			}
+			else if (background_color == 'rgb(136, 86, 167)') { 
+				/** purple **/
+				var region = 7
+			}
+			else if (background_color == 'rgb(201, 148, 199)') { 
+				/** pink **/
+				var region = 8
+			}
+			else if (background_color == 'rgb(65, 182, 196)') { 
+				/** teal **/
+				var region = 9
+			}
+
+			return region
+	    }
+
 	    function get_highlight_color(region_id){
 	    	if (region_id == 1) { 
-				var fillColor = '#D60F12'
+				var fillColor = '#de2d26'
 			} 
 			else if (region_id == 2) { 
-				var fillColor = '#28A5E7'
+				var fillColor = '#3182bd'
 			}
 			else if (region_id == 3) { 
-				var fillColor = '#43DE33'
+				var fillColor = '#31a354'
 			}
 			else if (region_id == 4) { 
-				var fillColor = '#D7F91E'
+				var fillColor = '#feb24c'
 			}
 			else if (region_id == 5) { 
-				var fillColor = '#606060'
+				var fillColor = '##bdbdbd'
 			}
 			else if (region_id == 6) { 
-				var fillColor = '#9C5209'
+				var fillColor = '#d95f0e'
 			}
 			else if (region_id == 7) { 
-				var fillColor = '#A10494'
+				var fillColor = 'rgb(92, 1, 148)'
 			}
 			else if (region_id == 8) { 
-				var fillColor = '#FF8823'
+				var fillColor = '#dd1c77'
 			}
 			else if (region_id == 9) { 
-				var fillColor = '#6CEEEE'
+				var fillColor = '#056c59'
 			}
 
 			return fillColor
@@ -96,31 +189,40 @@ $(function(){
 
 	    function getColor(region_id) {
 			if (region_id == 1) { 
-				var color = 'red'
+				/** red **/
+				var color = 'rgb(252, 146, 114)'
 			} 
 			else if (region_id == 2) { 
-				var color = 'blue'
+				/** blue **/
+				var color = 'rgb(158, 202, 225)'
 			}
 			else if (region_id == 3) { 
-				var color = 'green'
+				/** green **/
+				var color = 'rgb(161, 217, 155)'
 			}
 			else if (region_id == 4) { 
-				var color = 'yellow'
+				/** yellow **/
+				var color = 'rgb(255, 237, 160)'
 			}
 			else if (region_id == 5) { 
-				var color = 'grey'
+				/** grey **/
+				var color = 'rgb(150, 150, 150)'
 			}
 			else if (region_id == 6) { 
-				var color = 'brown'
+				/** brown **/
+				var color = 'rgb(254, 196, 79)'
 			}
 			else if (region_id == 7) { 
-				var color = 'purple'
+				/** purple **/
+				var color = 'rgb(136, 86, 167)'
 			}
 			else if (region_id == 8) { 
-				var color = 'orange'
+				/** pink **/
+				var color = 'rgb(201, 148, 199)'
 			}
 			else if (region_id == 9) { 
-				var color = 'teal'
+				/** teal **/
+				var color = 'rgb(65, 182, 196)'
 			}
 
 			return color
@@ -153,33 +255,6 @@ $(function(){
 	        neighborhoods_layer.resetStyle(e.target);
 	    };
 
-    	$('.program-card').hover(
-			function(event) {
-
-				var elem = $(event.currentTarget);
-				console.log(elem);
-				elem = elem[0]["childNodes"][1]["innerText"];
-				get_program_region(elem);
-
-				function get_program_region(elem){
-			    	return $.ajax({
-			            url: '/program_regions/' + elem,
-			            success: function(data){
-			            	var program_regions = data[0]['regions'];
-			            	create_highlights(program_regions);
-			            },
-			            error: function(error){
-			            	console.log(error)
-			            }
-			        });
-			    };
-
-			},
-			function(event){
-				reset_highlight();
-			}
-    	);
-
 	    function style(feature) {
 	        return {
 	            fillColor: getColor(feature.properties.region_id),
@@ -187,7 +262,7 @@ $(function(){
 	            opacity: 1,
 	            color: 'white',
 	            dashArray: '3',
-	            fillOpacity: 0.5,
+	            fillOpacity: 0.8,
 	        };
 	    };
 
@@ -208,6 +283,7 @@ $(function(){
 	            style: style,
 	            onEachFeature: onEachFeature
 	        }).addTo(map);
+
     };
 
     get_neighborhood_data();
@@ -215,33 +291,42 @@ $(function(){
     /** create legend */
 
     function getColor(region) {
-    	console.log('fire');
-		if (region == "Central") { 
-			var color = 'red'
+
+		if (region == "Far North Side") { 
+			/** blue **/
+			var color = '#9ecae1'
 		} 
-		else if (region == "Far North Side") { 
-			var color = 'blue'
-		}
-		else if (region == "Far Southeast Side") { 
-			var color = 'green'
-		}
-		else if (region == "Far Southwest Side") { 
-			var color = 'yellow'
-		}
-		else if (region == "North Side") { 
-			var color = 'grey'
+		else if (region == "North Side") {
+			/** grey **/ 
+			var color = '#969696'
 		}
 		else if (region == "Northwest Side") { 
-			var color = 'brown'
+			/** brown **/
+			var color = '#fec44f'
 		}
-		else if (region == "South Side") { 
-			var color = 'purple'
-		}
-		else if (region == "Southwest Side") { 
-			var color = 'orange'
+		else if (region == "Central") {
+			/** red **/
+			var color = '#fc9272'
 		}
 		else if (region == "West Side") { 
-			var color = 'teal'
+			/** teal **/
+			var color = '#41b6c4'
+		}
+		else if (region == "South Side") { 
+			/** purple **/
+			var color = 'rgb(136, 86, 167)'
+		}
+		else if (region == "Southwest Side") {
+			/** pink **/ 
+			var color = '#c994c7'
+		}
+		else if (region == "Far Southeast Side") {
+			/** green **/ 
+			var color = '#a1d99b'
+		}
+		else if (region == "Far Southwest Side") {
+			/** yellow **/ 
+			var color = '#ffeda0'
 		}
 
 		return color
@@ -252,12 +337,15 @@ $(function(){
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = ["Central", "Far North Side", "Far Southeast Side", "Far Southwest Side", "North Side", "Northwest Side", "South Side", "Southwest Side", "West Side"],
-            labels = [];
+            grades = ["Far North Side", "North Side", "Northwest Side", "Central", "West Side", "South Side", "Southwest Side", "Far Southeast Side", "Far Southwest Side"],
+            labels = ['<strong>Chicago Regions</strong>'];
 
         for (var i = 0; i < grades.length; i++) {
-            div.innerHTML +=
-            '<i style="background:' + getColor(grades[i]) + '"></i> ' + grades[i] + '<br>';
+        	div.innerHTML += 
+        	labels.push(
+        	'<i class="legend-color" style="background:' + getColor(grades[i]) + '"></i> ' + (grades[i] ? grades[i] : '+')
+        	);
+        	div.innerHTML = labels.join('<br>');
         }
 
         return div;
