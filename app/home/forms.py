@@ -20,7 +20,7 @@ class homeFilterForm(Form):
 		('Other', 'Other'),
 	]
 
-	program_main_search = StringField('Search By Zipcode or Neighborhood:', validators=[DataRequired()])
-	organizaion_main_search = StringField('Search By Zipcode or Neighborhood:', validators=[DataRequired()])
+	program_main_search = StringField('Search by Zipcode or Neighborhood:', validators=[DataRequired()])
+	organizaion_main_search = StringField('Search by Zipcode or Neighborhood:', validators=[DataRequired()])
 	select_type = SelectField('Search by Program Type:', choices=type_choices)
 	submit = SubmitField('Enter Search')
