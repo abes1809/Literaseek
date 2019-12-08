@@ -92,7 +92,7 @@ footer {
 
 .search-main-box {
 	background-color: rgb(79, 167, 159, .2);
-	height: 60%;
+	height: 65%;
 	border: 2px solid #4FA79F;
 	border-radius: 10px;
 	margin-bottom: 50px;
@@ -264,8 +264,9 @@ footer {
 }
 
 .home-card-bottom{
-	padding: 10px 10px 10px 0px;
-    font-size: 18px;
+	text-align: center;
+    padding: 10px 10px 10px 10px;
+    font-size: 15px;
     font-weight: bold;
 }
 
