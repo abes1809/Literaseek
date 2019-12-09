@@ -16,7 +16,7 @@ def organizations():
 		return org_search(form)
 
 	else:
-		all_organizations = Organization.query.join(Program).join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).order_by(Organization.name)
+		all_organizations = Organization.query.join(Program).join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).order_by(Organization.name).all()
 
 		return render_template('organizations.html', organizations=all_organizations, form=form)
 
