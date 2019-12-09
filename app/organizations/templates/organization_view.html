@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block content %} 
 
 <div class="container single-view-container">
     <div class="program_view">
@@ -107,7 +107,12 @@
                     <div class="col-6">
                         <h2 class="program-main-subheader-3"> Program Type(s)</h2>
                         {% for type in program.program_type %}
-                            <li class="org-text">{{type.name}}</li>
+                            {% if type.name == "Create Writing" %}
+                                {% set name = "Creative Writing"%}
+                                <li class="org-text">{{name}}</li>
+                            {% else %}
+                                <li class="org-text">{{type.name}}</li>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>
