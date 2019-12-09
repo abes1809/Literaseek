@@ -25,7 +25,7 @@ def programs():
 def program_search(search):
 	conditions = identify_filters(search)
 
-	all_programs = Program.query.join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).filter(*conditions).all()
+	all_programs = Program.query.join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).filter(*conditions).order_by(Program.name).all()
 
 	form = programFilterForm(request.form)
 	return render_template('programs.html', programs=all_programs, form=form)
@@ -35,7 +35,7 @@ def program_search(search):
 def program_search_home(zip_filter, neighborhood_filter, program_type):
 	conditions = identify_filters_home(zip_filter, neighborhood_filter, program_type)
 
-	all_programs = Program.query.join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).filter(*conditions).all()
+	all_programs = Program.query.join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).filter(*conditions).order_by(Program.name).all()
 
 	form = programFilterForm(request.form)
 

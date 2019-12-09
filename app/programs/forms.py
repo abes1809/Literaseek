@@ -16,7 +16,7 @@ class programFilterForm(Form):
 		('Writing', 'Writing'),
 		('Reading', 'Reading'),
 		('Expository Writing', 'Expository Writing'),
-		('Creative Writing', 'Creative Writing'),
+		('Create Writing', 'Creative Writing'),
 		('Dramatic Play', 'Dramatic Play'),
 		('Book Access & Distribution', 'Book Access & Distribution'),
 		('ELL/ESL', 'ELL/ESL'),

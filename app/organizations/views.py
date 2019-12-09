@@ -16,14 +16,14 @@ def organizations():
 		return org_search(form)
 
 	else:
-		all_organizations = Organization.query.all()
+		all_organizations = Organization.query.join(Program).join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).order_by(Organization.name)
 
 		return render_template('organizations.html', organizations=all_organizations, form=form)
 
 @organizations_blueprint.route('/organization_view/<organization_id>', methods=['GET', 'POST'])
 def organization_view(organization_id):
 
-	organizations = Organization.query.join(Program).join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).filter(Organization.id == organization_id).all()
+	organizations = Organization.query.join(Program).join(program_ages).join(program_types).join(AgeGroups).join(ProgramType).join(neighborhood_programs).join(Regions).join(Neighborhoods).join(neighborhood_zips).join(ZipCodes).filter(Organization.id == organization_id).order_by(Organization.name).all()
 
 	info_opening = "Hello! Below you will find the information for " +  organizations[0].name + "."
 	info_phone = " Organization Phone Number: " + organizations[0].phone

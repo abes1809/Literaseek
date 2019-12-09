@@ -95,8 +95,13 @@
                 <div class="col-6">
                     <div class="column-stacked">
                         <h2 class="program-main-subheader-3"> Program Type(s)</h2>
-                        {% for type in program.program_type %}
+                        {% for type in program.program_type %} 
+                            {% if type.name == "Create Writing" %}
+                                {% set name = "Creative Writing"%}
+                                <li class="org-text">{{name}}</li>
+                            {% else %}
                             <li class="org-text">{{type.name}}</li>
+                            {% endif %}
                         {% endfor %}
                     </div>
 
